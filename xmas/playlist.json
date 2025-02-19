@@ -1,0 +1,18 @@
+
+{
+  "songs": [
+    {"artist": "Charles Vestal", "title": "Good Kid", "file": "songs/Good Kid.mp3"},
+    {"artist": "Charles Vestal", "title": "If You're Waiting", "file": "songs/if you're waiting.mp3"},
+    {"artist": "Charles Vestal", "title": "Next Year", "file": "songs/Next Year.mp3"},
+    {"artist": "Charles Vestal", "title": "Melted", "file": "songs/01 Melted.mp3"},
+    {"artist": "Charles Vestal", "title": "Sunburned Santa", "file": "songs/02 Sunburned Santa.mp3"},
+    {"artist": "Charles Vestal", "title": "Guilty of Not Being Great", "file": "songs/03 Guilty of Not Being Great.mp3"},
+    {"artist": "Charles Vestal", "title": "Dear Santa", "file": "songs/04 Dear Santa.mp3"},
+    {"artist": "Charles Vestal", "title": "Sippin' on Christmas", "file": "songs/05 Sippin' on Christmas.mp3"},
+    {"artist": "Charles Vestal", "title": "Making Our Own", "file": "songs/06 Making Our Own.mp3"},
+    {"artist": "Charles Vestal", "title": "Hey Jingle Bell", "file": "songs/10 Hey Jingle Bell.mp3"},
+    {"artist": "Charles Vestal", "title": "Believe", "file": "songs/Believe.mp3"},
+    {"artist": "Charles Vestal", "title": "Christmas is When You Want It", "file": "songs/Christmas is When you Want It.mp3"},
+    {"artist": "Charles Vestal", "title": "Christmas on Zoom", "file": "songs/Christmas on Zoom.mp3"}
+]
+}

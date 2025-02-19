@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clouds</title>
+    <!-- Lightbox2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            text-align: center;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+        .title {
+            margin: 20px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .grid-item {
+            flex: 1 0 21%; /* Adjust the width of the items */
+            margin: 5px;
+        }
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <div class="title">Clouds 2014-2024</div> -->
+        <div class="grid">
+            <!-- Add your images here -->
+            <div class="grid-item">
+                <a href="image1.jpg" data-lightbox="image-grid" data-title="Dublin, 2014"><img src="thumbnails/image1.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image2.jpg" data-lightbox="image-grid" data-title="Berlin, 2019"><img src="thumbnails/image2.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image3.jpg" data-lightbox="image-grid" data-title="Berlin, 2019"><img src="thumbnails/image3.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image4.jpg" data-lightbox="image-grid" data-title="Portland, 2018"><img src="thumbnails/image4.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image5.jpg" data-lightbox="image-grid" data-title="Austin, 2015"><img src="thumbnails/image5.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image6.jpg" data-lightbox="image-grid" data-title="Berlin, 2019"><img src="thumbnails/image6.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image7.jpg" data-lightbox="image-grid" data-title="Berlin, 2019"><img src="thumbnails/image7.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image8.jpg" data-lightbox="image-grid" data-title="Berlin, 2019"><img src="thumbnails/image8.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image9.jpg" data-lightbox="image-grid" data-title="Berlin, 2019"><img src="thumbnails/image9.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image10.jpg" data-lightbox="image-grid" data-title="Portland, 2017"><img src="thumbnails/image10.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image11.jpg" data-lightbox="image-grid" data-title="Portland 2020"><img src="thumbnails/image11.jpg"></a>
+            </div>
+            <div class="grid-item">
+                <a href="image12.jpg" data-lightbox="image-grid" data-title="Berlin, 2024"><img src="thumbnails/image12.jpg"></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+    <script>
+        lightbox.option({
+            'albumLabel': "", // Removes the image count label
+            'disableScrolling': true, // Optional: Disable scrolling while lightbox is open
+            'alwaysShowNavOnTouchDevices': true // Optional: Always show navigation on touch devices
+        });
+    </script>
+</body>
+</html>
