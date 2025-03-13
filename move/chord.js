@@ -138,6 +138,9 @@ function populateChordList() {
   }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    populateChordList();
+});
 
 async function regenerateChordPreview(padNumber) {
     if (!window.decodedBuffer) return;
@@ -345,72 +348,68 @@ async function processChordSample(buffer, intervals) {
   return new Blob([new DataView(wavData)], { type: 'audio/wav' });
 }
 
-function initChordTab() {
-  document.getElementById('generatePreset').addEventListener('click', async () => {
-    document.getElementById('loadingIndicator').style.display = 'block';
-    document.getElementById('progressPercent').textContent = '0%';
-    
-    let totalChords = window.selectedChords.length;
-    let processedCount = 0;
-    
-    const fileInput = document.getElementById('wavFileInput');
-    const presetNameInput = document.getElementById('presetName');
-    if (!fileInput.files || fileInput.files.length === 0) {
-      alert("Please select a WAV file.");
-      return;
-    }
-    const file = fileInput.files[0];
-    let baseName = file.name.replace(/\.[^/.]+$/, "");
-    let presetName = presetNameInput.value.trim() || baseName;
-    
-    const arrayBuffer = await file.arrayBuffer();
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const decodedBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-    
-    const chordNames = window.selectedChords;
-    let sampleFilenames = [];
-    let processedSamples = {};
-    for (let chordName of chordNames) {
-      const intervals = CHORDS[chordName];
-      const blob = await processChordSample(decodedBuffer, intervals);
-      let safeChordName = chordName.replace(/\s+/g, '');
-      let filename = `${baseName}_chord_${safeChordName}.wav`;
-      sampleFilenames.push(filename);
-      processedSamples[chordName] = blob;
-      
-      processedCount++;
-      let progressPercent = Math.round((processedCount / totalChords) * 50); // first 50% for chord processing
-      document.getElementById('progressPercent').textContent = progressPercent + "%";
-    }
-    
-    const preset = generateChordPreset(presetName, sampleFilenames);
-    const presetJson = JSON.stringify(preset, null, 2);
-    
-    const zip = new JSZip();
-    zip.file("Preset.ablpreset", presetJson);
-    const samplesFolder = zip.folder("Samples");
-    for (let chordName of chordNames) {
-      let safeChordName = chordName.replace(/\s+/g, '');
-      let filename = `${baseName}_chord_${safeChordName}.wav`;
-      const blob = processedSamples[chordName];
-      samplesFolder.file(filename, blob);
-    }
-    zip.generateAsync({ type: "blob" }, function(metadata) {
-      let zipProgress = 50 + Math.round(metadata.percent / 2);
-      document.getElementById('progressPercent').textContent = zipProgress + "%";
-    }).then(function(content) {
-      document.getElementById('loadingIndicator').style.display = 'none';
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(content);
-      a.download = presetName + ".ablpresetbundle";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    });
-  });
+document.getElementById('generatePreset').addEventListener('click', async () => {
+  document.getElementById('loadingIndicator').style.display = 'block';
+  document.getElementById('progressPercent').textContent = '0%';
   
-  populateChordList();
-}
+  let totalChords = window.selectedChords.length;
+  let processedCount = 0;
+  
+  const fileInput = document.getElementById('wavFileInput');
+  const presetNameInput = document.getElementById('presetName');
+  if (!fileInput.files || fileInput.files.length === 0) {
+    alert("Please select a WAV file.");
+    return;
+  }
+  const file = fileInput.files[0];
+  let baseName = file.name.replace(/\.[^/.]+$/, "");
+  let presetName = presetNameInput.value.trim() || baseName;
+
+  const arrayBuffer = await file.arrayBuffer();
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const decodedBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+  const chordNames = window.selectedChords;
+  let sampleFilenames = [];
+  let processedSamples = {};
+  for (let chordName of chordNames) {
+    const intervals = CHORDS[chordName];
+    const blob = await processChordSample(decodedBuffer, intervals);
+    let safeChordName = chordName.replace(/\s+/g, '');
+    let filename = `${baseName}_chord_${safeChordName}.wav`;
+    sampleFilenames.push(filename);
+    processedSamples[chordName] = blob;
+    
+    processedCount++;
+    let progressPercent = Math.round((processedCount / totalChords) * 50); // first 50% for chord processing
+    document.getElementById('progressPercent').textContent = progressPercent + "%";
+  }
+
+  const preset = generateChordPreset(presetName, sampleFilenames);
+  const presetJson = JSON.stringify(preset, null, 2);
+
+  const zip = new JSZip();
+  zip.file("Preset.ablpreset", presetJson);
+  const samplesFolder = zip.folder("Samples");
+  for (let chordName of chordNames) {
+    let safeChordName = chordName.replace(/\s+/g, '');
+    let filename = `${baseName}_chord_${safeChordName}.wav`;
+    const blob = processedSamples[chordName];
+    samplesFolder.file(filename, blob);
+  }
+  zip.generateAsync({ type: "blob" }, function(metadata) {
+    let zipProgress = 50 + Math.round(metadata.percent / 2);
+    document.getElementById('progressPercent').textContent = zipProgress + "%";
+  }).then(function(content) {
+    document.getElementById('loadingIndicator').style.display = 'none';
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(content);
+    a.download = presetName + ".ablpresetbundle";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+});
 
 // Process chord samples for preview when a file is uploaded
 document.getElementById('wavFileInput').addEventListener('change', async function(e) {
