@@ -811,6 +811,18 @@ a {
     flex-wrap: wrap;
   }
   
+  /* Fix hero video poster size on mobile */
+  .hero-video-container {
+    max-width: 280px;
+    aspect-ratio: 1180 / 2556;
+  }
+  
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
   .section-container {
     padding: var(--space-2xl) var(--space-md);
   }
@@ -870,6 +882,11 @@ a {
   
   .download-card {
     padding: var(--space-xl);
+  }
+  
+  /* Further reduce hero video size on very small screens */
+  .hero-video-container {
+    max-width: 240px;
   }
 }
 
