@@ -263,7 +263,7 @@ a {
   font-size: 4rem;
   font-weight: 800;
   line-height: 1.1;
-  margin-bottom: var(--space-lg);
+  margin-bottom: calc(var(--space-lg) - 3px);
 }
 
 .gradient-text {
@@ -896,4 +896,59 @@ a {
 #demo .demo-preview .play-button {
   z-index: 2;
   pointer-events: none; /* allow clicks to reach the preview/video */
+}
+
+/* AudioUnit video sizing */
+#audio-units .demo-preview {
+  position: relative;
+  margin-bottom: var(--space-xl);
+  text-align: center;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#audio-units .demo-preview:hover {
+  transform: scale(1.02);
+}
+
+#audio-units .demo-preview .demo-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--near-black);
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+#audio-units .demo-preview .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4rem;
+  height: 4rem;
+  background: rgba(255, 107, 53, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+#audio-units .demo-preview .play-button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--white);
+  margin-left: 0.25rem;
+}
+
+#audio-units .demo-preview:hover .play-button {
+  background: rgba(255, 107, 53, 1);
+  transform: translate(-50%, -50%) scale(1.1);
 }
