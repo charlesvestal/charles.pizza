@@ -777,7 +777,7 @@ a {
   }
   
   .nav-links {
-    gap: var(--space-lg);
+    gap: var(--space-sm);
   }
   
   .nav-links a {
