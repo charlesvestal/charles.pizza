@@ -793,8 +793,9 @@ a {
 /* Demo video sizing */
 #demo .demo-preview {
   position: relative;
-  /* Keeps a stable box so size doesn't change when playback starts */
-  aspect-ratio: 4 / 3; /* iPad-style previews are 4:3 */
+  /* Fix the preview height to match original cards and avoid oversized posters */
+  height: 200px;
+  border-radius: var(--border-radius-lg);
   overflow: hidden;
 }
 
@@ -803,7 +804,10 @@ a {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fill the frame without changing container size */
+  /* Show the whole iPad frame without cropping/zooming */
+  object-fit: contain;
+  background: var(--surface-black);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #demo .demo-preview .play-button {
