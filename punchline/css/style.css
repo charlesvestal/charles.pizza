@@ -441,6 +441,14 @@ a {
   .effects-list-grid {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
+    width: 100%;
+    max-width: 600px; /* content-width panel */
+    margin: 0 auto; /* center the panel */
+    padding: var(--space-xl);
+    background: var(--surface-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-xl);
+    text-align: left; /* left-justified text */
   }
 }
 
