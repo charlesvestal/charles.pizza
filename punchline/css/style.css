@@ -395,10 +395,53 @@ a {
   background: var(--black);
 }
 
-.audio-unit-cards {
-  display: flex;
-  flex-direction: column;
+ .audio-unit-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3xl);
+}
+
+/* Stack on small screens */
+@media (max-width: 900px) {
+  .audio-unit-cards {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+}
+
+/* Punch‑in Effects full‑width section */
+.effects-list-section {
+  background: var(--near-black);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.effects-list-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.effects-list-grid .effects-column ul {
+  list-style: none;
+}
+
+.effects-list-grid li {
+  padding: var(--space-xs) 0;
+  color: var(--light-grey);
+}
+
+.effects-list-grid li strong {
+  color: var(--primary-orange);
+}
+
+@media (max-width: 768px) {
+  .effects-list-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
 }
 
 .audio-unit-card {
