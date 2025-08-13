@@ -192,6 +192,38 @@ a {
   font-weight: 700;
 }
 
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.app-icon-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-icon-link.header img {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-icon-link.footer img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-icon-link:hover img {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
 .nav-links {
   display: flex;
   align-items: center;
