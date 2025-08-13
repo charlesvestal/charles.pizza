@@ -1,0 +1,18 @@
+# Media files needed:
+
+## Hero Video (REQUIRED)
+# - hero-demo.mp4 (main app demo video, 1180 × 2556 aspect ratio)
+# - hero-demo.webm (alternative format for better browser support)
+# - video-poster.png (fallback poster image for video, 1180 × 2556 aspect ratio)
+
+## Images
+# - player-au-interface.png (AudioUnit interface, 16:10 aspect ratio)
+# - effects-au-interface.png (Effects AudioUnit interface, 16:10 aspect ratio)
+# - demo-sequencing.png (sequencing demo thumbnail)
+# - demo-effects.png (effects demo thumbnail)
+# - demo-automation.png (automation demo thumbnail)
+# - app-icon-large.png (large app icon, 96x96 or 128x128)
+
+# All media should use the orange/white on black color scheme matching the app
+# The hero video should demonstrate key features: sequencing, effects, automation
+# Video should be optimized for web (H.264/WebM, reasonable file size)

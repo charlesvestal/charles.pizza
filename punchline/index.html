@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punchline - iOS Drum Machine & AudioUnit</title>
+    <meta name="description" content="A playful drum machine and sequencer for iOS with powerful features and AudioUnit plugins for DAW integration.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>Punchline</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#audio-units">AudioUnits</a>
+                <a href="#demo">Demo</a>
+                <a class="cta-button" href="#download">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    The drum machine that <span class="gradient-text">punches above its weight</span>
+                </h1>
+                <p class="hero-subtitle">
+                    A playful iOS drum machine and sequencer with powerful features. Create beats, automate effects, and integrate with your DAW using AudioUnit plugins.
+                </p>
+                <div class="hero-actions">
+                    <a href="#download" class="primary-button">Download for iOS</a>
+                    <a href="#demo" class="secondary-button">Watch Demo</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-video-container">
+                    <video 
+                        class="hero-video" 
+                        autoplay 
+                        muted 
+                        loop 
+                        playsinline
+                        poster="images/video-poster.png"
+                    >
+                        <source src="images/hero-demo.mp4" type="video/mp4">
+                        <source src="images/hero-demo.webm" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button class="video-unmute-btn" id="unmuteBtn" title="Unmute video">
+                        <svg class="sound-off-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                        </svg>
+                        <svg class="sound-on-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="features" class="features-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Everything you need to create beats</h2>
+                <p>From simple patterns to complex automation, Punchline gives you advanced tools in an intuitive interface.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>16-Step Sequencer</h3>
+                    <p>Intuitive 4×4 step grid with pattern chaining, retrigs, and live recording modes for complex beat programming.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                        </svg>
+                    </div>
+                    <h3>16 Drum Sounds</h3>
+                    <p>Classic drum samples including bass drum, snare, hi-hats, toms, and percussion with pitch, filter, and level controls.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31.84 2.41 2 2.83V22h2v-2.17c1.16-.42 2-1.52 2-2.83 0-1.66-1.34-3-3-3zM10.5 12c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zm3-6c0-.83-.67-1.5-1.5-1.5S10.5 5.17 10.5 6s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zM17 14c-1.66 0-3 1.34-3 3 0 1.31.84 2.41 2 2.83V22h2v-2.17c1.16-.42 2-1.52 2-2.83 0-1.66-1.34-3-3-3z"/>
+                        </svg>
+                    </div>
+                    <h3>Real-time Automation</h3>
+                    <p>Record knob movements and effects automation in real-time with smooth Catmull-Rom interpolation playback.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3>16 Punch-in Effects</h3>
+                    <p>Curated effects including reverb, delay, distortion, filters, and modulation for creative sound design.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 9H6v6h3V9zm4-6H7c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 16H8V5h4v14z"/>
+                        </svg>
+                    </div>
+                    <h3>Pattern Chaining</h3>
+                    <p>Create complex song structures by chaining multiple patterns together for extended compositions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                    </div>
+                    <h3>Custom Samples</h3>
+                    <p>Import your own WAV files and create custom sample kits. Save and share kits as .punchlinekit bundles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="audio-units" class="audio-units-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2> AudioUnit Integration</h2>
+                <p>Use Punchline in your DAW with full-featured AudioUnit v3 plugins for seamless workflow integration.</p>
+            </div>
+
+            <div class="audio-unit-cards">
+                <div class="audio-unit-card player-unit">
+                    <div class="unit-header">
+                        <h3>Punchline Player AudioUnit</h3>
+                        <span class="unit-type">Instrument (aumu)</span>
+                    </div>
+                    <div class="unit-content">
+                        <div class="unit-description">
+                            <p>Full-featured drum machine and sequencer plugin. Create patterns, automate parameters, and trigger sounds via MIDI in your favorite DAW.</p>
+                        </div>
+                        <div class="unit-features">
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li>All the same sequencing and effects as the main Punchline app</li>
+                                <li>Full MIDI implementation with pad and effects triggering, plus parameter CC</li>
+                                <li>Tempo sync with host DAW</li>
+                            </ul>
+                        </div>
+                        <div class="unit-mockup">
+                            <img src="images/player-au-interface.png" alt="Punchline Player AudioUnit Interface">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="audio-unit-card effects-unit">
+                    <div class="unit-header">
+                        <h3>Punchline Effects AudioUnit</h3>
+                        <span class="unit-type">Effect (aufx)</span>
+                    </div>
+                    <div class="unit-content">
+                        <div class="unit-description">
+                            <p>Use the same Punchline sequencer to program a step-based rhythmic gate effect on live audio. Add punch-in effects and shape the sound with automatable gate length, level, and a classic Moog-style filter.</p>
+                        </div>
+                        <div class="unit-features">
+                            <h4>16 Punch-in Effects:</h4>
+                            <div class="effects-grid">
+                                <div class="effects-column">
+                                    <ul>
+                                        <li><strong>Bit Crush</strong> - Lo-fi digital texture</li>
+                                        <li><strong>Distortion</strong> - Analog overdrive</li>
+                                        <li><strong>Reverb</strong> - Lush spatial reverb</li>
+                                        <li><strong>Delay</strong> - Tempo-synced echoes</li>
+                                        <li><strong>Warble</strong> - Pitch modulation</li>
+                                        <li><strong>Phaser</strong> - Sweeping phase shifts</li>
+                                        <li><strong>Tape Stop</strong> - Vintage tape effect</li>
+                                        <li><strong>Note Shuffle</strong> - Timing humanization</li>
+                                    </ul>
+                                </div>
+                                <div class="effects-column">
+                                    <ul>
+                                        <li><strong>Lowpass Filter</strong> - Warm filtering</li>
+                                        <li><strong>Lowpass Sweep</strong> - Automatic filter movement</li>
+                                        <li><strong>Hipass Filter</strong> - Clean high-pass</li>
+                                        <li><strong>Hipass Sweep</strong> - Rising filter effects</li>
+                                        <li><strong>1/4 Gate</strong> - Quarter note chopping</li>
+                                        <li><strong>1/8 Gate</strong> - Eighth note rhythms</li>
+                                        <li><strong>1/8 Repeat</strong> - Stutter effects</li>
+                                        <li><strong>1/16 Repeat</strong> - Rapid-fire repeats</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="unit-mockup">
+                            <img src="images/effects-au-interface.png" alt="Punchline Effects AudioUnit Interface">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>See Punchline in Action</h2>
+                <p>Watch how Punchline transforms your creative workflow with intuitive beat making and powerful effects.</p>
+            </div>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-preview">
+                        <img src="images/demo-sequencing.png" alt="Step Sequencing Demo">
+                        <div class="play-button">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3>Step Sequencing</h3>
+                    <p>Create complex drum patterns with the intuitive 16-step sequencer</p>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-preview">
+                        <img src="images/demo-effects.png" alt="Effects Demo">
+                        <div class="play-button">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3>Punch-in Effects</h3>
+                    <p>Add impactful effects in real-time with punch-in controls</p>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-preview">
+                        <img src="images/demo-automation.png" alt="Automation Demo">
+                        <div class="play-button">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3>Parameter Automation</h3>
+                    <p>Record smooth knob movements and build dynamic arrangements</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="download-section">
+        <div class="section-container">
+            <div class="download-card">
+                <div class="download-content">
+                    <h2>Ready to make beats?</h2>
+                    <p>Download Punchline and transform your iOS device into a fun, powerful drum machine with AudioUnit integration.</p>
+                    <div class="download-actions">
+                        <a href="#" class="primary-button large">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+                            </svg>
+                            Download from App Store
+                        </a>
+                        <div class="download-info">
+                            <span>iOS 17.6+</span>
+                            <span>•</span>
+                            <span>iPhone & iPad</span>
+                            <span>•</span>
+                            <span>AudioUnit v3</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="download-visual">
+                    <img src="images/app-icon-large.png" alt="Punchline App Icon">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Punchline</h3>
+                <p>Playful iOS drum machine and AudioUnit collection</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#audio-units">AudioUnits</a>
+                    <a href="#demo">Demo</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#">Documentation</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Updates</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Punchline. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Video unmute functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.hero-video');
+            const unmuteBtn = document.getElementById('unmuteBtn');
+            const soundOffIcon = unmuteBtn.querySelector('.sound-off-icon');
+            const soundOnIcon = unmuteBtn.querySelector('.sound-on-icon');
+
+            if (video && unmuteBtn) {
+                unmuteBtn.addEventListener('click', function() {
+                    if (video.muted) {
+                        video.muted = false;
+                        soundOffIcon.style.display = 'none';
+                        soundOnIcon.style.display = 'block';
+                        unmuteBtn.title = 'Mute video';
+                    } else {
+                        video.muted = true;
+                        soundOffIcon.style.display = 'block';
+                        soundOnIcon.style.display = 'none';
+                        unmuteBtn.title = 'Unmute video';
+                    }
+                });
+
+                // Handle autoplay policies - some browsers may prevent autoplay
+                video.addEventListener('loadeddata', function() {
+                    video.play().catch(function(error) {
+                        console.log('Autoplay prevented:', error);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
