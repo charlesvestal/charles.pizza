@@ -492,7 +492,7 @@ a {
 }
 
 .unit-mockup {
-  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
   text-align: center;
 }
 
@@ -502,7 +502,7 @@ a {
   border-radius: var(--border-radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: var(--near-black);
-  aspect-ratio: 16/10;
+  aspect-ratio: 4/3;
   object-fit: cover;
 }
 
