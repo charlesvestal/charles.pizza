@@ -44,7 +44,8 @@
                         muted 
                         loop 
                         playsinline
-                        poster="images/video-poster.png"
+                        poster="images/hero-demo.png"
+                        width="1180" height="2556"
                     >
                         <source src="images/hero-demo.mp4" type="video/mp4">
                         <source src="images/hero-demo.webm" type="video/webm">
@@ -221,8 +222,11 @@
             
             <div class="demo-grid">
                 <div class="demo-item">
-                    <div class="demo-preview">
-                        <img src="images/demo-sequencing.png" alt="Step Sequencing Demo">
+                    <div class="demo-preview" data-demo="sequencing">
+                        <video class="demo-video" playsinline preload="none" poster="images/demo-sequencing.png">
+                            <source src="images/demo-sequencing.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                         <div class="play-button">
                             <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M8 5v14l11-7z"/>
@@ -234,8 +238,11 @@
                 </div>
 
                 <div class="demo-item">
-                    <div class="demo-preview">
-                        <img src="images/demo-effects.png" alt="Effects Demo">
+                    <div class="demo-preview" data-demo="effects">
+                        <video class="demo-video" playsinline preload="none" poster="images/demo-effects.png">
+                            <source src="images/demo-effects.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                         <div class="play-button">
                             <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M8 5v14l11-7z"/>
@@ -247,8 +254,11 @@
                 </div>
 
                 <div class="demo-item">
-                    <div class="demo-preview">
-                        <img src="images/demo-automation.png" alt="Automation Demo">
+                    <div class="demo-preview" data-demo="automation">
+                        <video class="demo-video" playsinline preload="none" poster="images/demo-automation.png">
+                            <source src="images/demo-automation.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                         <div class="play-button">
                             <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M8 5v14l11-7z"/>
@@ -347,6 +357,48 @@
                     });
                 });
             }
+
+            // Demo previews: click image to play the associated video
+            const demoPreviews = document.querySelectorAll('#demo .demo-preview');
+            const demoVideos = document.querySelectorAll('#demo .demo-video');
+
+            function pauseOtherDemos(except) {
+                demoVideos.forEach(v => {
+                    if (v !== except) {
+                        v.pause();
+                        v.currentTime = 0;
+                        const pb = v.closest('.demo-preview')?.querySelector('.play-button');
+                        if (pb) pb.style.display = '';
+                    }
+                });
+            }
+
+            demoPreviews.forEach(preview => {
+                const v = preview.querySelector('.demo-video');
+                const pb = preview.querySelector('.play-button');
+                if (!v || !pb) return;
+
+                // clicking anywhere on the preview (including the video) toggles play/pause
+                preview.addEventListener('click', () => {
+                    if (v.paused) {
+                        pauseOtherDemos(v);
+                        v.play().catch(() => {});
+                    } else {
+                        v.pause();
+                    }
+                });
+
+                v.addEventListener('play', () => {
+                    pb.style.display = 'none';
+                });
+                v.addEventListener('pause', () => {
+                    pb.style.display = '';
+                });
+                v.addEventListener('ended', () => {
+                    pb.style.display = '';
+                    v.currentTime = 0;
+                });
+            });
         });
     </script>
 </body>
