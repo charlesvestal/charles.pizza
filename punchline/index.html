@@ -11,6 +11,11 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
                 <a class="app-icon-link header" href="#download" aria-label="Download on the App Store">
                     <img src="images/app-icon-large.png" alt="Punchline app icon">
                 </a>
@@ -22,6 +27,12 @@
                 <a href="#demo">Demos</a>
                 <a class="cta-button" href="#download">Download</a>
             </div>
+        </div>
+        <div class="mobile-menu-dropdown" id="mobileMenuDropdown">
+            <a href="#features" class="mobile-menu-item">Features</a>
+            <a href="#audio-units" class="mobile-menu-item">AUv3</a>
+            <a href="#demo" class="mobile-menu-item">Demos</a>
+            <a href="#download" class="mobile-menu-item cta">Download</a>
         </div>
     </nav>
 
@@ -376,8 +387,54 @@
     </footer>
 
     <script>
-        // Video unmute functionality
+        // Mobile menu functionality
         document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+            const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
+            let isMenuOpen = false;
+            
+            // Toggle menu
+            mobileMenuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenuToggle.classList.add('active');
+                    mobileMenuDropdown.classList.add('active');
+                } else {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuDropdown.classList.remove('active');
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (isMenuOpen && !mobileMenuDropdown.contains(e.target) && e.target !== mobileMenuToggle) {
+                    isMenuOpen = false;
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuDropdown.classList.remove('active');
+                }
+            });
+            
+            // Close menu when clicking menu items
+            mobileMenuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    isMenuOpen = false;
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuDropdown.classList.remove('active');
+                });
+            });
+            
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMenuOpen) {
+                    isMenuOpen = false;
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuDropdown.classList.remove('active');
+                }
+            });
+            
+            // Video unmute functionality
             const video = document.querySelector('.hero-video');
             const unmuteBtn = document.getElementById('unmuteBtn');
             const soundOffIcon = unmuteBtn.querySelector('.sound-off-icon');
