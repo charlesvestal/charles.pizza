@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kits - Punchline Drum Machine</title>
+    <meta name="description" content="Download drum kits and create your own custom kits for Punchline iOS drum machine.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .kits-hero {
+            padding: calc(80px + var(--space-2xl)) var(--space-lg) var(--space-2xl);
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255, 147, 47, 0.1) 0%, transparent 100%);
+        }
+
+        .kits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-lg);
+        }
+
+        .kits-section {
+            margin-bottom: var(--space-3xl);
+        }
+
+        .kits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+
+        .kit-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 147, 47, 0.2);
+            border-radius: 12px;
+            padding: var(--space-lg);
+            transition: all 0.3s ease;
+        }
+
+        .kit-card:hover {
+            background: rgba(255, 147, 47, 0.05);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .kit-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+            color: var(--accent-primary);
+        }
+
+        .kit-description {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            font-size: 0.95rem;
+        }
+
+        .kit-download {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            background: var(--accent-primary);
+            color: var(--background);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .kit-download:hover {
+            background: var(--accent-secondary);
+            transform: scale(1.05);
+        }
+
+        .kit-creator {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed rgba(255, 147, 47, 0.3);
+            border-radius: 16px;
+            padding: var(--space-xl);
+        }
+
+        .pad-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pad-cell {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 147, 47, 0.3);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pad-cell:hover {
+            background: rgba(255, 147, 47, 0.1);
+            border-color: var(--accent-primary);
+            transform: scale(1.02);
+        }
+
+        .pad-cell.has-file {
+            background: rgba(255, 147, 47, 0.15);
+            border-color: var(--accent-primary);
+        }
+
+        .pad-cell.drag-over {
+            background: rgba(255, 147, 47, 0.3);
+            border-color: var(--accent-secondary);
+            transform: scale(1.05);
+        }
+
+        .pad-label {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .pad-filename {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 0 var(--space-xs);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .pad-input {
+            display: none;
+        }
+
+        .generate-button {
+            display: block;
+            margin: var(--space-xl) auto 0;
+            padding: var(--space-md) var(--space-xl);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--background);
+            border: 2px solid var(--accent-primary);
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 147, 47, 0.2);
+        }
+
+        .generate-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 147, 47, 0.3);
+        }
+
+        .generate-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .kit-name-input {
+            display: block;
+            margin: 0 auto var(--space-lg);
+            padding: var(--space-sm) var(--space-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 147, 47, 0.3);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .kit-name-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background: rgba(255, 147, 47, 0.05);
+        }
+
+        .instructions {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            font-size: 0.95rem;
+        }
+
+        .download-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(255, 147, 47, 0.05) 100%);
+            padding: var(--space-2xl) 0;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 147, 47, 0.2);
+            border-radius: 16px;
+            padding: var(--space-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xl);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .download-content {
+            flex: 1;
+        }
+
+        .download-content h2 {
+            margin-bottom: var(--space-md);
+            color: var(--accent-primary);
+        }
+
+        .download-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .primary-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md) var(--space-lg);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--background);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-primary);
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 147, 47, 0.3);
+        }
+
+        .primary-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .download-info {
+            margin-top: var(--space-md);
+            display: flex;
+            gap: var(--space-md);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .download-visual img {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .pad-grid {
+                gap: var(--space-sm);
+            }
+            
+            .pad-label {
+                font-size: 1.25rem;
+            }
+
+            .download-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .download-visual {
+                order: -1;
+            }
+
+            .download-info {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <a class="app-icon-link header" href="index.html" aria-label="Back to home">
+                    <img src="images/app-icon-large.png" alt="Punchline app icon">
+                </a>
+                <h1>Punchline</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features">Features</a>
+                <a href="index.html#audio-units">AUv3</a>
+                <a href="index.html#demo">Demos</a>
+                <a href="kits.html" class="active">Kits</a>
+                <a class="cta-button" href="index.html#download">Download</a>
+            </div>
+        </div>
+        <div class="mobile-menu-dropdown" id="mobileMenuDropdown">
+            <a href="index.html#features" class="mobile-menu-item">Features</a>
+            <a href="index.html#audio-units" class="mobile-menu-item">AUv3</a>
+            <a href="index.html#demo" class="mobile-menu-item">Demos</a>
+            <a href="kits.html" class="mobile-menu-item active">Kits</a>
+            <a href="index.html#download" class="mobile-menu-item cta">Download</a>
+        </div>
+    </nav>
+
+    <div class="kits-hero">
+        <h1 class="hero-title">Drum Kits</h1>
+        <p class="hero-subtitle">Download ready-made kits or <a href="#kit-creator" style="color: #FF932f !important; font-weight: 700; text-decoration: none; border-bottom: 2px solid #FF932f;">create your own</a></p>
+    </div>
+
+    <div class="kits-container">
+        <section class="kits-section">
+            <h2>Download Kits</h2>
+            <p class="instructions">Import these kits directly into Punchline on your iOS device</p>
+            <div class="kits-grid">
+                <div class="kit-card">
+                    <h3 class="kit-name">Kit Name 1</h3>
+                    <p class="kit-description">Cool kit description here.</p>
+                    <a href="#" download class="kit-download">
+                        Download Kit
+                    </a>
+                </div>
+                <div class="kit-card">
+                    <h3 class="kit-name">Kit Name 2</h3>
+                    <p class="kit-description">Cool kit description here.</p>
+                    <a href="#" download class="kit-download">
+                        Download Kit
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="kits-section" id="kit-creator">
+            <h2 style="color: #FF932f !important; font-weight: 700;">Create Your Own Kit</h2>
+            <div class="kit-creator">
+                <p class="instructions">Click or drag WAV files onto each pad to build your custom kit</p>
+                
+                <input type="text" class="kit-name-input" id="kitName" placeholder="Enter kit name" value="My Custom Kit">
+                
+                <div class="pad-grid">
+                    <div class="pad-cell" data-pad="0" data-label="BD">
+                        <span class="pad-label">BD</span>
+                        <span class="pad-filename">Bass Drum</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-0">
+                    </div>
+                    <div class="pad-cell" data-pad="1" data-label="SD">
+                        <span class="pad-label">SD</span>
+                        <span class="pad-filename">Snare Drum</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-1">
+                    </div>
+                    <div class="pad-cell" data-pad="2" data-label="CH">
+                        <span class="pad-label">CH</span>
+                        <span class="pad-filename">Closed Hi-Hat</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-2">
+                    </div>
+                    <div class="pad-cell" data-pad="3" data-label="OH">
+                        <span class="pad-label">OH</span>
+                        <span class="pad-filename">Open Hi-Hat</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-3">
+                    </div>
+                    <div class="pad-cell" data-pad="4" data-label="SN">
+                        <span class="pad-label">SN</span>
+                        <span class="pad-filename">Synth Snare</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-4">
+                    </div>
+                    <div class="pad-cell" data-pad="5" data-label="ST">
+                        <span class="pad-label">ST</span>
+                        <span class="pad-filename">Sticks</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-5">
+                    </div>
+                    <div class="pad-cell" data-pad="6" data-label="CY">
+                        <span class="pad-label">CY</span>
+                        <span class="pad-filename">Cymbal</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-6">
+                    </div>
+                    <div class="pad-cell" data-pad="7" data-label="NS">
+                        <span class="pad-label">NS</span>
+                        <span class="pad-filename">Noise</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-7">
+                    </div>
+                    <div class="pad-cell" data-pad="8" data-label="CP">
+                        <span class="pad-label">CP</span>
+                        <span class="pad-filename">Clap</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-8">
+                    </div>
+                    <div class="pad-cell" data-pad="9" data-label="CK">
+                        <span class="pad-label">CK</span>
+                        <span class="pad-filename">Click</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-9">
+                    </div>
+                    <div class="pad-cell" data-pad="10" data-label="LT">
+                        <span class="pad-label">LT</span>
+                        <span class="pad-filename">Low Tom</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-10">
+                    </div>
+                    <div class="pad-cell" data-pad="11" data-label="HT">
+                        <span class="pad-label">HT</span>
+                        <span class="pad-filename">Hi Tom</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-11">
+                    </div>
+                    <div class="pad-cell" data-pad="12" data-label="CB">
+                        <span class="pad-label">CB</span>
+                        <span class="pad-filename">Cowbell</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-12">
+                    </div>
+                    <div class="pad-cell" data-pad="13" data-label="BP">
+                        <span class="pad-label">BP</span>
+                        <span class="pad-filename">Blip</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-13">
+                    </div>
+                    <div class="pad-cell" data-pad="14" data-label="TN">
+                        <span class="pad-label">TN</span>
+                        <span class="pad-filename">Tone</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-14">
+                    </div>
+                    <div class="pad-cell" data-pad="15" data-label="BS">
+                        <span class="pad-label">BS</span>
+                        <span class="pad-filename">Bass Tone</span>
+                        <input type="file" class="pad-input" accept="audio/wav" id="pad-15">
+                    </div>
+                </div>
+                
+                <button class="generate-button" id="generateKit">Generate Kit</button>
+            </div>
+        </section>
+        <section class="kits-section download-section">
+            <div class="download-card">
+                <div class="download-content">
+                    <h2>Get Punchline</h2>
+                    <p>Import your custom kits directly into Punchline on your iOS device.</p>
+                    <div class="download-actions">
+                        <a href="https://testflight.apple.com/join/5TMp92U3" class="primary-button large">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+                            </svg>
+                            Download from Testflight
+                        </a>
+                        <div class="download-info">
+                            <span>iOS 17.6+</span>
+                            <span>•</span>
+                            <span>iPhone & iPad</span>
+                            <span>•</span>
+                            <span>AudioUnit v3</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="download-visual">
+                    <img src="images/app-icon-large.png" alt="Punchline App Icon">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            mobileMenuDropdown.classList.toggle('active');
+        });
+
+        // Kit creator functionality
+        const padCells = document.querySelectorAll('.pad-cell');
+        const generateButton = document.getElementById('generateKit');
+        const kitNameInput = document.getElementById('kitName');
+        const padFiles = new Map();
+
+        // Mapping of pad labels to internal names
+        const padMapping = {
+            'BD': 'bassDrum',
+            'SD': 'snareDrum',
+            'CH': 'closedHiHat',
+            'OH': 'openHiHat',
+            'SN': 'synthSnare',
+            'ST': 'sticks',
+            'CY': 'cymbal',
+            'NS': 'noise',
+            'CP': 'handClap',
+            'CK': 'click',
+            'LT': 'lowTom',
+            'HT': 'hiTom',
+            'CB': 'cowBell',
+            'BP': 'blip',
+            'TN': 'tone',
+            'BS': 'bassTone'
+        };
+
+        // Click to upload
+        padCells.forEach(cell => {
+            cell.addEventListener('click', (e) => {
+                // Don't trigger click if we're dragging
+                if (e.target.classList.contains('pad-input')) return;
+                const input = cell.querySelector('.pad-input');
+                input.click();
+            });
+
+            const input = cell.querySelector('.pad-input');
+            input.addEventListener('change', (e) => {
+                handleFileSelect(e.target.files[0], cell);
+            });
+
+            // Drag and drop
+            cell.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                cell.classList.add('drag-over');
+            });
+
+            cell.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                cell.classList.remove('drag-over');
+            });
+
+            cell.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                cell.classList.remove('drag-over');
+                
+                const files = Array.from(e.dataTransfer.files);
+                const wavFile = files.find(f => f.type === 'audio/wav' || f.name.toLowerCase().endsWith('.wav'));
+                
+                if (wavFile) {
+                    handleFileSelect(wavFile, cell);
+                } else {
+                    alert('Please drop a WAV file');
+                }
+            });
+        });
+
+        function handleFileSelect(file, cell) {
+            if (!file) {
+                alert('No file selected');
+                return;
+            }
+            
+            // Accept both audio/wav mime type and .wav extension
+            if (file.type !== 'audio/wav' && !file.name.toLowerCase().endsWith('.wav')) {
+                alert('Please select a WAV file');
+                return;
+            }
+
+            const padIndex = parseInt(cell.dataset.pad);
+            const label = cell.dataset.label;
+            
+            padFiles.set(padIndex, {
+                file: file,
+                label: label,
+                internalName: padMapping[label]
+            });
+
+            cell.classList.add('has-file');
+            cell.querySelector('.pad-filename').textContent = file.name;
+        }
+
+        // Generate kit
+        generateButton.addEventListener('click', async () => {
+            if (padFiles.size === 0) {
+                alert('Please add at least one sample');
+                return;
+            }
+
+            generateButton.disabled = true;
+            generateButton.textContent = 'Generating...';
+
+            try {
+                const zip = new JSZip();
+                const samplesFolder = zip.folder('samples');
+                
+                // Generate unique timestamp for file naming
+                const timestamp = Date.now();
+                
+                // Prepare kit.json data
+                const sampleAssignments = [];
+                const originalNames = [];
+                const padVolumes = [];
+
+                // Process each pad
+                for (let i = 0; i < 16; i++) {
+                    const padData = padFiles.get(i);
+                    
+                    if (padData) {
+                        const internalName = padData.internalName;
+                        const filename = `${internalName}_${timestamp}.wav`;
+                        
+                        // Add file to zip
+                        samplesFolder.file(filename, padData.file);
+                        
+                        // Add to assignments (name, filename pairs)
+                        sampleAssignments.push(internalName);
+                        sampleAssignments.push(filename);
+                        
+                        // Add to original names
+                        originalNames.push(internalName);
+                        originalNames.push(padData.file.name);
+                    }
+                }
+
+                // Build pad volumes array (all 16 pads with default volume 0)
+                const allPadNames = ['snareDrum', 'tone', 'openHiHat', 'lowTom', 'cymbal', 'sticks', 
+                                    'noise', 'bassTone', 'bassDrum', 'blip', 'cowBell', 'handClap', 
+                                    'closedHiHat', 'hiTom', 'synthSnare', 'click'];
+                
+                allPadNames.forEach(name => {
+                    padVolumes.push(name);
+                    padVolumes.push(0);
+                });
+
+                // Create kit.json
+                const kitJson = {
+                    sampleAssignments: sampleAssignments,
+                    originalNames: originalNames,
+                    name: kitNameInput.value || 'Custom Kit',
+                    createdAt: Date.now() / 1000,
+                    version: "1.0",
+                    padVolumes: padVolumes
+                };
+
+                zip.file('kit.json', JSON.stringify(kitJson, null, 4));
+
+                // Generate and download zip
+                const content = await zip.generateAsync({type: 'blob'});
+                const url = URL.createObjectURL(content);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${kitNameInput.value || 'Custom Kit'}.punchlinekit`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                // Reset UI
+                setTimeout(() => {
+                    if (confirm('Kit generated successfully! Would you like to clear the pads to create another kit?')) {
+                        padFiles.clear();
+                        padCells.forEach(cell => {
+                            cell.classList.remove('has-file');
+                            const label = cell.dataset.label;
+                            const defaultNames = {
+                                'BD': 'Bass Drum', 'SD': 'Snare Drum', 'CH': 'Closed Hi-Hat', 
+                                'OH': 'Open Hi-Hat', 'SN': 'Synth Snare', 'ST': 'Sticks',
+                                'CY': 'Cymbal', 'NS': 'Noise', 'CP': 'Clap', 'CK': 'Click',
+                                'LT': 'Low Tom', 'HT': 'Hi Tom', 'CB': 'Cowbell', 'BP': 'Blip',
+                                'TN': 'Tone', 'BS': 'Bass Tone'
+                            };
+                            cell.querySelector('.pad-filename').textContent = defaultNames[label];
+                            cell.querySelector('.pad-input').value = '';
+                        });
+                    }
+                }, 100);
+
+            } catch (error) {
+                console.error('Error generating kit:', error);
+                alert('Error generating kit. Please try again.');
+            } finally {
+                generateButton.disabled = false;
+                generateButton.textContent = 'Generate Kit';
+            }
+        });
+    </script>
+</body>
+</html>
