@@ -40,6 +40,24 @@
             border-radius: 12px;
             padding: var(--space-lg);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Footer row in kit card: download left, author right, pinned to bottom */
+        .kit-meta {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: var(--space-md);
+            color: var(--text-secondary);
+        }
+
+        /* Kit author styling: smaller and light grey */
+        .kit-author {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
         }
 
         .kit-card:hover {
@@ -67,11 +85,12 @@
             gap: var(--space-xs);
             padding: var(--space-sm) var(--space-md);
             background: var(--accent-primary);
-            color: var(--background);
+            color: var(--white);
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .kit-download:hover {
@@ -337,18 +356,23 @@
             <p class="instructions">Import these kits directly into Punchline on your iOS device</p>
             <div class="kits-grid">
                 <div class="kit-card">
-                    <h3 class="kit-name">Kit Name 1</h3>
-                    <p class="kit-description">Cool kit description here.</p>
-                    <a href="#" download class="kit-download">
-                        Download Kit
-                    </a>
+                    <h3 class="kit-name">Batallion Kit</h3>
+                    <p class="kit-description">A collection of glitchy, gritty synth drums.</p>
+                    <div class="kit-meta">
+                        <a href="Batallion Kit.punchlinekit" download class="kit-download">
+                            Download Kit
+                        </a>
+                        <span class="kit-author">by timfromtheborder</span>
+                    </div>
                 </div>
                 <div class="kit-card">
                     <h3 class="kit-name">Kit Name 2</h3>
                     <p class="kit-description">Cool kit description here.</p>
-                    <a href="#" download class="kit-download">
-                        Download Kit
-                    </a>
+                    <div class="kit-meta">
+                        <a href="#" download class="kit-download">
+                            Download Kit
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

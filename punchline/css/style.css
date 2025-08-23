@@ -7,6 +7,7 @@
   --off-white: #F8F9FA;
   --light-grey: #E9ECEF;
   --medium-grey: #6C757D;
+  --text-secondary: var(--medium-grey);
   --dark-grey: #343A40;
   --black: #000000;
   --near-black: #0D1117;
