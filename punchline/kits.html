@@ -79,22 +79,43 @@
             font-size: 0.95rem;
         }
 
-        .kit-download {
+        .kit-actions {
+            display: flex;
+            gap: var(--space-sm);
+            align-items: center;
+        }
+
+        .kit-download, .kit-open {
             display: inline-flex;
             align-items: center;
             gap: var(--space-xs);
             padding: var(--space-sm) var(--space-md);
-            background: var(--accent-primary);
-            color: var(--white);
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .kit-download {
+            background: var(--accent-primary);
+            color: var(--white);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .kit-download:hover {
             background: var(--accent-secondary);
+            transform: scale(1.05);
+        }
+
+        .kit-open {
+            background: rgba(255, 147, 47, 0.15);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .kit-open:hover {
+            background: rgba(255, 147, 47, 0.25);
             transform: scale(1.05);
         }
 
@@ -361,9 +382,14 @@
                     <h3 class="kit-name">Battallion Kit</h3>
                     <p class="kit-description">A collection of glitchy, gritty synth drums.</p>
                     <div class="kit-meta">
-                        <a href="kits/Battalion Kit.punchlinekit" download class="kit-download">
-                            Download Kit
-                        </a>
+                        <div class="kit-actions">
+                            <a href="kits/Battalion Kit.punchlinekit" download class="kit-download">
+                                Download
+                            </a>
+                            <a href="#" data-kit="kits/Battalion Kit.punchlinekit" class="kit-open open-in-app">
+                                Open in Punchline
+                            </a>
+                        </div>
                         <span class="kit-author">by timfromtheborder</span>
                     </div>
                 </div>
@@ -371,9 +397,14 @@
                     <h3 class="kit-name">Kit Name 2</h3>
                     <p class="kit-description">Cool kit description here.</p>
                     <div class="kit-meta">
-                        <a href="#" download class="kit-download">
-                            Download Kit
-                        </a>
+                        <div class="kit-actions">
+                            <a href="#" download class="kit-download">
+                                Download
+                            </a>
+                            <a href="#" class="kit-open">
+                                Open in Punchline
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -509,6 +540,20 @@
         mobileMenuToggle.addEventListener('click', () => {
             mobileMenuToggle.classList.toggle('active');
             mobileMenuDropdown.classList.toggle('active');
+        });
+
+        // Handle "Open in Punchline" links
+        document.querySelectorAll('.open-in-app').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const kitPath = link.dataset.kit;
+                // Get the full URL to the kit file
+                const fullUrl = new URL(kitPath, window.location.href).href;
+                // Convert to punchline:// scheme
+                const punchlineUrl = fullUrl.replace(/^https?:\/\//, 'punchline://');
+                // Open the URL
+                window.location.href = punchlineUrl;
+            });
         });
 
         // Kit creator functionality
