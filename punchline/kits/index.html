@@ -43,13 +43,12 @@
             display: flex;
             flex-direction: column;
         }
-        /* Footer row in kit card: download left, author right, pinned to bottom */
+        /* Footer row in kit card: actions and author stacked, pinned to bottom */
         .kit-meta {
             margin-top: auto;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: var(--space-md);
+            flex-direction: column;
+            gap: var(--space-sm);
             color: var(--text-secondary);
         }
 
@@ -57,7 +56,8 @@
         .kit-author {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            white-space: nowrap;
+            text-align: center;
+            margin-bottom: var(--space-sm);
         }
 
         .kit-card:hover {
@@ -83,6 +83,7 @@
             display: flex;
             gap: var(--space-sm);
             align-items: center;
+            justify-content: center;
         }
 
         .kit-download, .kit-open {
@@ -98,24 +99,25 @@
         }
 
         .kit-download {
-            background: var(--accent-primary);
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .kit-download:hover {
-            background: var(--accent-secondary);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-primary);
             transform: scale(1.05);
         }
 
         .kit-open {
-            background: rgba(255, 147, 47, 0.15);
-            color: var(--accent-primary);
-            border: 1px solid var(--accent-primary);
+            background: #FF932f;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .kit-open:hover {
-            background: rgba(255, 147, 47, 0.25);
+            background: #FFB047;
             transform: scale(1.05);
         }
 
@@ -382,6 +384,7 @@
                     <h3 class="kit-name">Battallion Kit</h3>
                     <p class="kit-description">A collection of glitchy, gritty synth drums.</p>
                     <div class="kit-meta">
+                        <span class="kit-author">by timfromtheborder</span>
                         <div class="kit-actions">
                             <a href="Battalion Kit.punchlinekit" download class="kit-download">
                                 Download
@@ -390,7 +393,6 @@
                                 Open in Punchline
                             </a>
                         </div>
-                        <span class="kit-author">by timfromtheborder</span>
                     </div>
                 </div>
                 <div class="kit-card">
