@@ -192,6 +192,52 @@
             display: none;
         }
 
+        .pad-play-button {
+            position: absolute;
+            top: var(--space-xs);
+            right: var(--space-xs);
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 147, 47, 0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .pad-play-button:hover {
+            background: rgba(255, 147, 47, 0.9);
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 147, 47, 0.4);
+        }
+
+        .pad-play-button svg {
+            width: 20px;
+            height: 20px;
+            margin-left: 2px;
+            color: #000;
+        }
+
+        .pad-play-button.playing {
+            background: rgba(255, 147, 47, 0.9);
+            animation: pulse 1s infinite;
+        }
+
+        .pad-play-button.playing svg {
+            color: #fff;
+            margin-left: 1px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         .generate-button {
             display: block;
             margin: var(--space-xl) auto 0;
@@ -381,28 +427,15 @@
             <p class="instructions">Import these kits directly into Punchline on your iOS device</p>
             <div class="kits-grid">
                 <div class="kit-card">
-                    <h3 class="kit-name">9x9 Inspired</h3>
-                    <p class="kit-description">Classic Roland TR-909 drum machine sounds.</p>
+                    <h3 class="kit-name">909 Altemark</h3>
+                    <p class="kit-description">Classic Roland TR-909 drum machine sounds with crisp electronic precision.</p>
                     <div class="kit-meta">
+                        <span class="kit-author">contains samples from <a href="https://freesound.org/people/altemark/packs/1643/" target="_blank" style="color: #FF932f; text-decoration: underline;">altemark</a></span>
                         <div class="kit-actions">
-                            <a href="9x9 Inspired.punchlinekit" download class="kit-download">
+                            <a href="909 Altemark.punchlinekit" download class="kit-download">
                                 Download
                             </a>
-                            <a href="#" data-kit="9x9 Inspired.punchlinekit" class="kit-open open-in-app">
-                                Open in Punchline
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="kit-card">
-                    <h3 class="kit-name">PX-12</h3>
-                    <p class="kit-description">Blips and bloops from an inspiring calculator-sized drum machine.</p>
-                    <div class="kit-meta">
-                        <div class="kit-actions">
-                            <a href="PX-12.punchlinekit" download class="kit-download">
-                                Download
-                            </a>
-                            <a href="#" data-kit="PX-12.punchlinekit" class="kit-open open-in-app">
+                            <a href="#" data-kit="909 Altemark.punchlinekit" class="kit-open open-in-app">
                                 Open in Punchline
                             </a>
                         </div>
@@ -424,14 +457,28 @@
                     </div>
                 </div>
                 <div class="kit-card">
-                    <h3 class="kit-name">RS7K Jungle</h3>
-                    <p class="kit-description">Old skool hits from an old skool groovebox.</p>
+                    <h3 class="kit-name">Ate Oh</h3>
+                    <p class="kit-description">The classic 808, for your big sound needs.</p>
                     <div class="kit-meta">
                         <div class="kit-actions">
-                            <a href="RS7K Jungle.punchlinekit" download class="kit-download">
+                            <a href="And Heartbreaks.punchlinekit" download class="kit-download">
                                 Download
                             </a>
-                            <a href="#" data-kit="RS7K Jungle.punchlinekit" class="kit-open open-in-app">
+                            <a href="#" data-kit="And Heartbreaks.punchlinekit" class="kit-open open-in-app">
+                                Open in Punchline
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kit-card">
+                    <h3 class="kit-name">LoFi Haze</h3>
+                    <p class="kit-description">A dream of drums with vintage warmth and nostalgic character.</p>
+                    <div class="kit-meta">
+                        <div class="kit-actions">
+                            <a href="LoFi Haze.punchlinekit" download class="kit-download">
+                                Download
+                            </a>
+                            <a href="#" data-kit="LoFi Haze.punchlinekit" class="kit-open open-in-app">
                                 Open in Punchline
                             </a>
                         </div>
@@ -451,81 +498,161 @@
                     <div class="pad-cell" data-pad="0" data-label="BD">
                         <span class="pad-label">BD</span>
                         <span class="pad-filename">Bass Drum</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-0">
                     </div>
                     <div class="pad-cell" data-pad="1" data-label="SD">
                         <span class="pad-label">SD</span>
                         <span class="pad-filename">Snare Drum</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-1">
                     </div>
                     <div class="pad-cell" data-pad="2" data-label="CH">
                         <span class="pad-label">CH</span>
                         <span class="pad-filename">Closed Hi-Hat</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-2">
                     </div>
                     <div class="pad-cell" data-pad="3" data-label="OH">
                         <span class="pad-label">OH</span>
                         <span class="pad-filename">Open Hi-Hat</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-3">
                     </div>
                     <div class="pad-cell" data-pad="4" data-label="SN">
                         <span class="pad-label">SN</span>
                         <span class="pad-filename">Synth Snare</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-4">
                     </div>
                     <div class="pad-cell" data-pad="5" data-label="ST">
                         <span class="pad-label">ST</span>
                         <span class="pad-filename">Sticks</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-5">
                     </div>
                     <div class="pad-cell" data-pad="6" data-label="CY">
                         <span class="pad-label">CY</span>
                         <span class="pad-filename">Cymbal</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-6">
                     </div>
                     <div class="pad-cell" data-pad="7" data-label="NS">
                         <span class="pad-label">NS</span>
                         <span class="pad-filename">Noise</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-7">
                     </div>
                     <div class="pad-cell" data-pad="8" data-label="CP">
                         <span class="pad-label">CP</span>
                         <span class="pad-filename">Clap</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-8">
                     </div>
                     <div class="pad-cell" data-pad="9" data-label="CK">
                         <span class="pad-label">CK</span>
                         <span class="pad-filename">Click</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-9">
                     </div>
                     <div class="pad-cell" data-pad="10" data-label="LT">
                         <span class="pad-label">LT</span>
                         <span class="pad-filename">Low Tom</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-10">
                     </div>
                     <div class="pad-cell" data-pad="11" data-label="HT">
                         <span class="pad-label">HT</span>
                         <span class="pad-filename">Hi Tom</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-11">
                     </div>
                     <div class="pad-cell" data-pad="12" data-label="CB">
                         <span class="pad-label">CB</span>
                         <span class="pad-filename">Cowbell</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-12">
                     </div>
                     <div class="pad-cell" data-pad="13" data-label="BP">
                         <span class="pad-label">BP</span>
                         <span class="pad-filename">Blip</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-13">
                     </div>
                     <div class="pad-cell" data-pad="14" data-label="TN">
                         <span class="pad-label">TN</span>
                         <span class="pad-filename">Tone</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-14">
                     </div>
                     <div class="pad-cell" data-pad="15" data-label="BS">
                         <span class="pad-label">BS</span>
                         <span class="pad-filename">Bass Tone</span>
+                        <button class="pad-play-button" style="display: none;" aria-label="Play sample">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
                         <input type="file" class="pad-input" accept="audio/wav" id="pad-15">
                     </div>
                 </div>
@@ -591,6 +718,7 @@
         const generateButton = document.getElementById('generateKit');
         const kitNameInput = document.getElementById('kitName');
         const padFiles = new Map();
+        const audioElements = new Map();
 
         // Mapping of pad labels to internal names
         const padMapping = {
@@ -615,8 +743,10 @@
         // Click to upload
         padCells.forEach(cell => {
             cell.addEventListener('click', (e) => {
-                // Don't trigger click if we're dragging
-                if (e.target.classList.contains('pad-input')) return;
+                // Don't trigger click if we're dragging or clicking play button
+                if (e.target.classList.contains('pad-input') || 
+                    e.target.classList.contains('pad-play-button') ||
+                    e.target.closest('.pad-play-button')) return;
                 const input = cell.querySelector('.pad-input');
                 input.click();
             });
@@ -653,6 +783,45 @@
                     alert('Please drop a WAV file');
                 }
             });
+
+            // Play button functionality
+            const playButton = cell.querySelector('.pad-play-button');
+            playButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const padIndex = parseInt(cell.dataset.pad);
+                const audio = audioElements.get(padIndex);
+                
+                if (audio) {
+                    // Stop all other playing audio
+                    audioElements.forEach((otherAudio, otherIndex) => {
+                        if (otherIndex !== padIndex && !otherAudio.paused) {
+                            otherAudio.pause();
+                            otherAudio.currentTime = 0;
+                            const otherCell = document.querySelector(`[data-pad="${otherIndex}"]`);
+                            const otherPlayButton = otherCell?.querySelector('.pad-play-button');
+                            if (otherPlayButton) otherPlayButton.classList.remove('playing');
+                        }
+                    });
+
+                    if (audio.paused) {
+                        audio.currentTime = 0;
+                        audio.play().catch(err => {
+                            console.error('Error playing audio:', err);
+                            alert('Error playing audio file');
+                        });
+                        playButton.classList.add('playing');
+                    } else {
+                        audio.pause();
+                        audio.currentTime = 0;
+                        playButton.classList.remove('playing');
+                    }
+
+                    // Remove playing class when audio ends
+                    audio.onended = () => {
+                        playButton.classList.remove('playing');
+                    };
+                }
+            });
         });
 
         function handleFileSelect(file, cell) {
@@ -676,8 +845,17 @@
                 internalName: padMapping[label]
             });
 
+            // Create audio element for playback
+            const audio = new Audio();
+            audio.src = URL.createObjectURL(file);
+            audioElements.set(padIndex, audio);
+
             cell.classList.add('has-file');
             cell.querySelector('.pad-filename').textContent = file.name;
+            
+            // Show play button
+            const playButton = cell.querySelector('.pad-play-button');
+            playButton.style.display = 'flex';
         }
 
         // Generate kit
@@ -758,6 +936,18 @@
                 setTimeout(() => {
                     if (confirm('Kit generated successfully! Would you like to clear the pads to create another kit?')) {
                         padFiles.clear();
+                        
+                        // Clean up audio elements
+                        audioElements.forEach(audio => {
+                            if (audio.src) {
+                                URL.revokeObjectURL(audio.src);
+                            }
+                        });
+                        audioElements.clear();
+                        
+                        // Reset kit name
+                        kitNameInput.value = 'My Custom Kit';
+                        
                         padCells.forEach(cell => {
                             cell.classList.remove('has-file');
                             const label = cell.dataset.label;
@@ -770,6 +960,11 @@
                             };
                             cell.querySelector('.pad-filename').textContent = defaultNames[label];
                             cell.querySelector('.pad-input').value = '';
+                            
+                            // Hide play button
+                            const playButton = cell.querySelector('.pad-play-button');
+                            playButton.style.display = 'none';
+                            playButton.classList.remove('playing');
                         });
                     }
                 }, 100);
