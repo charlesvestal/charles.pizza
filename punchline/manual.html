@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual - Punchline iOS Drum Machine</title>
+    <meta name="description" content="Complete manual for Punchline iOS drum machine - learn all features, sequencing, effects, and AudioUnit integration.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .manual-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--space-4xl) var(--space-lg);
+        }
+        
+        .manual-section {
+            background: var(--surface-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-2xl);
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .manual-section h2 {
+            color: var(--primary-orange);
+            margin-bottom: var(--space-lg);
+            border-bottom: 2px solid var(--primary-orange);
+            padding-bottom: var(--space-sm);
+        }
+        
+        .manual-section h3 {
+            color: var(--white);
+            margin: var(--space-lg) 0 var(--space-sm) 0;
+            font-size: 1.25rem;
+        }
+        
+        .manual-section h4 {
+            color: var(--accent-orange);
+            margin: var(--space-md) 0 var(--space-sm) 0;
+            font-size: 1.125rem;
+        }
+        
+        .manual-item {
+            margin-bottom: var(--space-md);
+        }
+        
+        .manual-item-title {
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .manual-item-desc {
+            color: var(--light-grey);
+            margin-left: var(--space-lg);
+        }
+        
+        .manual-step {
+            display: flex;
+            margin-bottom: var(--space-sm);
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            color: var(--primary-orange);
+            font-weight: 600;
+            margin-right: var(--space-md);
+            min-width: 24px;
+        }
+        
+        .step-desc {
+            color: var(--light-grey);
+        }
+        
+        .button-combo {
+            display: flex;
+            margin-bottom: var(--space-sm);
+            align-items: flex-start;
+        }
+        
+        .combo-buttons {
+            color: var(--secondary-orange);
+            font-weight: 600;
+            min-width: 120px;
+            margin-right: var(--space-md);
+        }
+        
+        .combo-desc {
+            color: var(--light-grey);
+        }
+        
+        .feature-list {
+            margin-left: var(--space-lg);
+        }
+        
+        .feature-list ul {
+            list-style: none;
+            margin: var(--space-sm) 0;
+        }
+        
+        .feature-list li {
+            color: var(--light-grey);
+            margin-bottom: var(--space-xs);
+            padding-left: var(--space-md);
+            position: relative;
+        }
+        
+        .feature-list li::before {
+            content: "•";
+            color: var(--primary-orange);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .context-note {
+            background: rgba(255, 147, 47, 0.1);
+            border: 1px solid rgba(255, 147, 47, 0.3);
+            border-radius: var(--border-radius);
+            padding: var(--space-md);
+            margin: var(--space-md) 0;
+        }
+        
+        .context-note p {
+            color: var(--accent-orange);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .back-to-site {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .back-to-site a {
+            color: var(--primary-orange);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        
+        .back-to-site a:hover {
+            color: var(--accent-orange);
+        }
+        
+        .manual-nav {
+            background: var(--near-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+            position: sticky;
+            top: 80px;
+            z-index: 10;
+        }
+        
+        .manual-nav h3 {
+            color: var(--white);
+            margin: 0 0 var(--space-md) 0;
+            font-size: 1rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        
+        .nav-links a {
+            color: var(--light-grey);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--border-radius);
+            transition: all 0.2s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .manual-nav {
+                position: static;
+                margin-top: var(--space-2xl);
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: var(--space-xs);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <a class="app-icon-link header" href="/#download" aria-label="Download on the App Store">
+                    <img src="images/app-icon-large.png" alt="Punchline app icon">
+                </a>
+                <h1>Punchline Manual</h1>
+            </div>
+            <div class="nav-links">
+                <a href="/#features">Features</a>
+                <a href="/#audio-units">AUv3</a>
+                <a href="/#demo">Demos</a>
+                <a href="kits/">Kits</a>
+                <a href="privacy/">Privacy</a>
+                <a class="cta-button" href="/#download">Download</a>
+            </div>
+        </div>
+        <div class="mobile-menu-dropdown" id="mobileMenuDropdown">
+            <a href="/" class="mobile-menu-item">Home</a>
+            <a href="/#features" class="mobile-menu-item">Features</a>
+            <a href="/#audio-units" class="mobile-menu-item">AUv3</a>
+            <a href="/#demo" class="mobile-menu-item">Demos</a>
+            <a href="kits/" class="mobile-menu-item">Kits</a>
+            <a href="privacy/" class="mobile-menu-item">Privacy</a>
+            <a href="/#download" class="mobile-menu-item cta">Download</a>
+        </div>
+    </nav>
+
+    <div class="manual-container">
+        <div class="back-to-site">
+            <a href="/">&larr; Back to Punchline</a>
+        </div>
+        
+        <header style="text-align: center; margin-bottom: var(--space-4xl);">
+            <h1 style="color: var(--white); margin-bottom: var(--space-md);">Punchline Manual</h1>
+            <p style="color: var(--light-grey); font-size: 1.125rem;">Complete guide to the iOS drum machine and AudioUnit plugins</p>
+        </header>
+
+        <div class="manual-nav">
+            <h3>Quick Navigation</h3>
+            <div class="nav-links">
+                <a href="#interface">Interface Overview</a>
+                <a href="#basic-use">Basic Use</a>
+                <a href="#advanced">Advanced Operations</a>
+                <a href="#samples">Custom Samples</a>
+                <a href="#audiounit-player">AudioUnit Player</a>
+                <a href="#audiounit-effects">AudioUnit Effects</a>
+                <a href="#midi">MIDI Implementation</a>
+                <a href="#effects-list">Effects Reference</a>
+            </div>
+        </div>
+
+        <section id="interface" class="manual-section">
+            <h2>Interface Overview</h2>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Top Row</div>
+                <div class="manual-item-desc">SND, PAT, and BPM buttons for selecting the sound, pattern and tempo. In AudioUnit Player mode, the BPM button is replaced with SNG (swing/shuffle).</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Knobs</div>
+                <div class="manual-item-desc">Four knobs labelled PTCH, LEN, FLTR, and LVL. When BPM is held, PTCH and LEN are replaced with tempo and swing controls.</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Pad Grid</div>
+                <div class="manual-item-desc">Sixteen pads arranged in a 4×4 grid for step sequencing and triggering punch-in effects.</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Bottom Row</div>
+                <div class="manual-item-desc">? (help), FUNC (function), FX (effects), PLAY/STOP and WRIT (write) buttons. In AudioUnit Player mode, PLAY/STOP is not available.</div>
+            </div>
+        </section>
+
+        <section id="basic-use" class="manual-section">
+            <h2>Basic Use</h2>
+            
+            <h3>When Stopped</h3>
+            <div class="manual-step">
+                <div class="step-number">1.</div>
+                <div class="step-desc">Tap pads to preview/trigger and select a drum sound.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">2.</div>
+                <div class="step-desc">Knobs control pitch, length, filter, and level of the selected sound.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">3.</div>
+                <div class="step-desc">Hold WRIT and tap a pad to enter the selected sound on a step.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">4.</div>
+                <div class="step-desc">Press PLAY to start the sequencer.</div>
+            </div>
+
+            <h3>Write Mode (WRIT button on)</h3>
+            <div class="manual-step">
+                <div class="step-number">1.</div>
+                <div class="step-desc">Tap WRIT to toggle write mode on/off.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">2.</div>
+                <div class="step-desc">Tap pads to toggle steps in the pattern for the selected sound.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">3.</div>
+                <div class="step-desc">Hold a step to edit its parameters, including RETRIG.</div>
+            </div>
+
+            <h3>Play and FX</h3>
+            <div class="manual-step">
+                <div class="step-number">1.</div>
+                <div class="step-desc">Hold FX and tap pads to apply punch-in effects.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">2.</div>
+                <div class="step-desc">Double-tap FX button to latch FX mode.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">3.</div>
+                <div class="step-desc">With WRIT on, hold FX and tap pads to record effects automation (overwrites existing).</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">4.</div>
+                <div class="step-desc">Hold BPM and use the knobs to adjust TEMPO and SWING (main app only).</div>
+            </div>
+
+            <h3>Live Record Mode (hold WRIT)</h3>
+            <div class="manual-step">
+                <div class="step-number">1.</div>
+                <div class="step-desc">Hold WRIT button down while sequencer is playing and...</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">2.</div>
+                <div class="step-desc">... tap a pad while holding WRIT to record steps live.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">3.</div>
+                <div class="step-desc">... turn a knob to record sound automation.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">4.</div>
+                <div class="step-desc">Hold WRIT while holding FX to overdub effects automation (accumulates with existing).</div>
+            </div>
+        </section>
+
+        <section id="advanced" class="manual-section">
+            <h2>Advanced Operations</h2>
+            
+            <h3>Patterns and Chaining</h3>
+            <div class="manual-step">
+                <div class="step-number">1.</div>
+                <div class="step-desc">Hold PAT and tap a pad to select a pattern.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">2.</div>
+                <div class="step-desc">Hold PAT and tap multiple pads to create a pattern chain (1, 2, 3, 4).</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">3.</div>
+                <div class="step-desc">Hold PAT and tap a single pad multiple times to add it to a chain more than once (1, 1, 1, 2).</div>
+            </div>
+            
+            <div class="button-combo">
+                <div class="combo-buttons">SND + Pad</div>
+                <div class="combo-desc">Select a pad without triggering its sound.</div>
+            </div>
+            <div class="button-combo">
+                <div class="combo-buttons">WRITE + PAT</div>
+                <div class="combo-desc">Copy a pattern. Tap a pattern to paste.</div>
+            </div>
+            <div class="button-combo">
+                <div class="combo-buttons">FUNC + PAT (CLR)</div>
+                <div class="combo-desc">Clear the active pattern.</div>
+            </div>
+
+            <h3>Advanced Operations with FUNC</h3>
+            <div class="manual-step">
+                <div class="step-number">1.</div>
+                <div class="step-desc">Hold FUNC and tap a pad to mute/unmute that sound.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">2.</div>
+                <div class="step-desc">Hold FUNC and FX and tap a pad to enable/disable that effect.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">3.</div>
+                <div class="step-desc">Hold FUNC to adjust quantized pitch and per-sound pattern length.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">4.</div>
+                <div class="step-desc">Hold a step + FUNC to edit that step's probability (chance of triggering).</div>
+            </div>
+
+            <h3>Hi-Hat Choke Group</h3>
+            <div class="manual-step">
+                <div class="step-number">1.</div>
+                <div class="step-desc">CH (Closed Hi-Hat) and OH (Open Hi-Hat) are in a choke group.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">2.</div>
+                <div class="step-desc">When one triggers, it immediately stops the other for realistic hi-hat behavior.</div>
+            </div>
+            <div class="manual-step">
+                <div class="step-number">3.</div>
+                <div class="step-desc">This mimics how real hi-hats work - you can't have both open and closed simultaneously.</div>
+            </div>
+        </section>
+
+        <section id="samples" class="manual-section">
+            <h2>Custom Samples & Kit Library</h2>
+            
+            <p style="color: var(--light-grey); margin-bottom: var(--space-lg);">The Sample Browser (FUNC + SND) provides advanced sample and kit management:</p>
+            
+            <h3>Sample Management</h3>
+            <div class="feature-list">
+                <ul>
+                    <li>Import custom WAV files for any pad</li>
+                    <li>Preview samples by tapping pad badges</li>
+                    <li>Adjust per-pad volume levels</li>
+                    <li>Reset to default samples</li>
+                </ul>
+            </div>
+
+            <h3>Kit Library</h3>
+            <div class="feature-list">
+                <ul>
+                    <li>Save your current sounds as a kit</li>
+                    <li>Load kits from the library</li>
+                    <li>Share kits via email, messages, AirDrop, etc.</li>
+                    <li>Import/export .punchlinekit bundles</li>
+                    <li>Bundled kits included from Resources</li>
+                    <li>Kits sync between main app and AudioUnit</li>
+                    <li>Each AudioUnit instance can load a different kit</li>
+                </ul>
+            </div>
+            
+            <div class="context-note">
+                <p>Find more kits and make your own at <a href="https://charles.pizza/punchline/kits" style="color: var(--primary-orange); text-decoration: underline;">charles.pizza/punchline/kits</a></p>
+            </div>
+        </section>
+
+        <section id="audiounit-player" class="manual-section">
+            <h2>AudioUnit Player</h2>
+            
+            <p style="color: var(--light-grey); margin-bottom: var(--space-lg);">Punchline Player AudioUnit is a full-featured drum machine and sequencer plugin. Use MIDI to trigger individual drum sounds, control effects, and adjust all sound parameters in real-time.</p>
+            
+            <h3>Key Features</h3>
+            <div class="feature-list">
+                <ul>
+                    <li>All the same sequencing and effects as the main Punchline app</li>
+                    <li>Full MIDI implementation with pad and effects triggering, plus parameter CC</li>
+                    <li>Tempo sync with host DAW</li>
+                    <li>Load different kits per AudioUnit instance</li>
+                </ul>
+            </div>
+
+            <div class="context-note">
+                <p><strong>Interface Note:</strong> In Player AudioUnit mode, the BPM button is replaced with SNG (swing/shuffle) and there is no PLAY/STOP button as tempo is controlled by the host DAW.</p>
+            </div>
+        </section>
+
+        <section id="audiounit-effects" class="manual-section">
+            <h2>AudioUnit Effects</h2>
+            
+            <p style="color: var(--light-grey); margin-bottom: var(--space-lg);">Punchline Effects transforms your audio with step-based gating and real-time effects processing. Load it as an effects plugin in your DAW to add rhythmic patterns and sonic textures to any audio source.</p>
+            
+            <h3>Interface</h3>
+            <div class="manual-item">
+                <div class="manual-item-title">Step Grid</div>
+                <div class="manual-item-desc">16-step pattern grid controls which steps allow audio to pass through (blue = gated open, grey = gated closed)</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">GATE Knob</div>
+                <div class="manual-item-desc">Controls step length and envelope timing</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">VOL Knob</div>
+                <div class="manual-item-desc">Global volume control for the effected signal</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">FREQ Knob</div>
+                <div class="manual-item-desc">Global filter frequency (200Hz - 20kHz)</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">RES Knob</div>
+                <div class="manual-item-desc">Global filter resonance</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">FX Button + Steps</div>
+                <div class="manual-item-desc">Hold FX and tap steps to trigger punch-in effects, or double tap to toggle FX mode</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Step + FUNC</div>
+                <div class="manual-item-desc">Hold a step, then hold FUNC to edit that step's probability</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">FUNC + PTN LEN</div>
+                <div class="manual-item-desc">Pattern length to loop</div>
+            </div>
+
+            <h3>Step Patterns</h3>
+            <div class="manual-item">
+                <div class="manual-item-title">Creating Patterns</div>
+                <div class="manual-item-desc">Tap steps to toggle them on/off. Filled steps allow audio through, empty steps gate the audio</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Pattern Chain</div>
+                <div class="manual-item-desc">Hold PAT + tap multiple patterns to create a looping sequence</div>
+            </div>
+
+            <h3>Automation</h3>
+            <div class="manual-item">
+                <div class="manual-item-title">Knob Automation</div>
+                <div class="manual-item-desc">Hold WRIT while playing and turn a knob to record its movements to the pattern</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Punch-in FX</div>
+                <div class="manual-item-desc">When WRIT is toggled on, hold FX and tap an FX pad to record punch-in FX automation</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">FX Overdubbing</div>
+                <div class="manual-item-desc">When holding WRIT hold FX and tap an FX pad to overdub, rather than overwrite punch-in FX automation</div>
+            </div>
+        </section>
+
+        <section id="midi" class="manual-section">
+            <h2>MIDI Implementation</h2>
+            
+            <h3>Player AudioUnit MIDI</h3>
+            
+            <h4>Drum Sounds (Notes 36-51, C2-D#3)</h4>
+            <div class="feature-list">
+                <ul>
+                    <li>Notes 36-51 (C2-D#3): Trigger drum sounds using General MIDI mapping</li>
+                    <li>Velocity 0-127: Controls sample playback volume</li>
+                    <li>Note-off: Stops sustained sounds (most drums play to completion)</li>
+                    <li>Visual feedback: Green flash when triggered</li>
+                </ul>
+            </div>
+
+            <h4>Effects (Notes 60-75, C4-D#5)</h4>
+            <div class="feature-list">
+                <ul>
+                    <li>Notes 60-75 (C4-D#5): Trigger effects on pads 1-16</li>
+                    <li>Velocity 0-127: Controls effect intensity</li>
+                    <li>Note-off: Disables/clears the effect</li>
+                    <li>Maps to actual effect pad layout</li>
+                </ul>
+            </div>
+
+            <h4>Continuous Controllers</h4>
+            <div class="manual-item">
+                <div class="manual-item-title">Visible Knobs (CC 16-19)</div>
+                <div class="manual-item-desc">
+                    CC 16: Knob A (Pitch) - affects selected sound<br>
+                    CC 17: Knob B (Length) - affects selected sound<br>
+                    CC 18: Knob C (Filter) - affects selected sound<br>
+                    CC 19: Knob D (Level) - affects selected sound
+                </div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Per-Pad Direct Access (CC 20-83)</div>
+                <div class="manual-item-desc">
+                    CC 20-23: Pad 1 (Bass Drum) - Pitch, Length, Filter, Level<br>
+                    CC 24-27: Pad 2 (Snare) - Pitch, Length, Filter, Level<br>
+                    CC 28-31: Pad 3 (Closed Hi-Hat) - Pitch, Length, Filter, Level<br>
+                    ... continuing through all 16 pads<br>
+                    CC 80-83: Pad 16 (Bass Tone) - Pitch, Length, Filter, Level
+                </div>
+            </div>
+
+            <h3>Effects AudioUnit MIDI</h3>
+            
+            <h4>Gate Control (Note 36, C2)</h4>
+            <div class="feature-list">
+                <ul>
+                    <li>Note 36 (C2): Momentary gate control</li>
+                    <li>Note ON: Gate OPEN (all steps lit, audio passes through)</li>
+                    <li>Note OFF: Gate CLOSED (all steps off, audio blocked)</li>
+                    <li>Hold C2 to keep gate open, release to close</li>
+                    <li>Visual feedback: Step lights update in real-time</li>
+                </ul>
+            </div>
+
+            <h4>Global Parameters (CC 16-19)</h4>
+            <div class="feature-list">
+                <ul>
+                    <li>CC 16: Step Length (gate envelope timing)</li>
+                    <li>CC 17: Global Volume (master output level)</li>
+                    <li>CC 18: Filter Frequency (200Hz - 20kHz)</li>
+                    <li>CC 19: Filter Resonance (0% - 95%)</li>
+                </ul>
+            </div>
+
+            <h3>Sound Mapping (Notes 36-52, C2-E3)</h3>
+            <div style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--light-grey); line-height: 1.4;">
+                36 (C2): Bass Drum &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 37 (C#2): Synth Snare<br>
+                38 (D2): Snare Drum &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 39 (D#2): Sticks<br>
+                41 (F2): Low Tom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 42 (F#2): Closed Hi-Hat<br>
+                43 (G2): Hi Tom &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 44 (G#2): Cow Bell<br>
+                45 (A2): Blip &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 46 (A#2): Open Hi-Hat<br>
+                47 (B2): Tone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 48 (C3): Bass Tone<br>
+                49 (C#3): Cymbal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 50 (D3): Noise<br>
+                51 (D#3): Hand Clap &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 52 (E3): Click
+            </div>
+        </section>
+
+        <section id="effects-list" class="manual-section">
+            <h2>Punch-in Effects Reference</h2>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Bit Crush</div>
+                <div class="manual-item-desc">Hold FX + Pad 1: Digital bit reduction for lo-fi textures</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Distortion</div>
+                <div class="manual-item-desc">Hold FX + Pad 2: Analog-style overdrive and saturation</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Reverb</div>
+                <div class="manual-item-desc">Hold FX + Pad 3: Lush reverb with long tails</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Delay</div>
+                <div class="manual-item-desc">Hold FX + Pad 4: Dotted-eighth note tempo-synced delay</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Warble</div>
+                <div class="manual-item-desc">Hold FX + Pad 5: Pitch modulation for chorus-like textures</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Phaser</div>
+                <div class="manual-item-desc">Hold FX + Pad 6: Classic sweeping phaser effect</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Tape Stop</div>
+                <div class="manual-item-desc">Hold FX + Pad 7: Vintage tape-stop pitch drop effect</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Note Shuffle</div>
+                <div class="manual-item-desc">Hold FX + Pad 8: Subtle timing variations for groove</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Lowpass Filter</div>
+                <div class="manual-item-desc">Hold FX + Pad 9: Resonant low-pass filter</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Lowpass Sweep</div>
+                <div class="manual-item-desc">Hold FX + Pad 10: Automatic filter sweep over 2 bars</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Hipass Filter</div>
+                <div class="manual-item-desc">Hold FX + Pad 11: Clean high-pass filter for removing low frequencies</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">Hipass Sweep</div>
+                <div class="manual-item-desc">Hold FX + Pad 12: Automatic high-pass sweep</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">1/4 Gate</div>
+                <div class="manual-item-desc">Hold FX + Pad 13: Rhythmic gate at quarter note intervals</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">1/8 Gate</div>
+                <div class="manual-item-desc">Hold FX + Pad 14: Rhythmic gate at eighth note intervals</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">1/8 Repeat</div>
+                <div class="manual-item-desc">Hold FX + Pad 15: Stutter effect at eighth note intervals</div>
+            </div>
+            
+            <div class="manual-item">
+                <div class="manual-item-title">1/16 Repeat</div>
+                <div class="manual-item-desc">Hold FX + Pad 16: Rapid-fire repeat at sixteenth note intervals</div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; padding: var(--space-4xl) 0 var(--space-2xl); border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: var(--space-4xl);">
+            <p style="color: var(--medium-grey); margin-bottom: var(--space-sm);">Questions? Support? <a href="mailto:punchline@charles.pizza" style="color: var(--primary-orange); text-decoration: underline;">Get in touch!</a></p>
+            <p style="color: var(--medium-grey); font-size: 0.875rem;">&copy; 2024 Punchline. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu functionality (same as main site)
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+            const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
+            let isMenuOpen = false;
+            
+            // Toggle menu
+            mobileMenuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenuToggle.classList.add('active');
+                    mobileMenuDropdown.classList.add('active');
+                } else {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuDropdown.classList.remove('active');
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (isMenuOpen && !mobileMenuDropdown.contains(e.target) && e.target !== mobileMenuToggle) {
+                    isMenuOpen = false;
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuDropdown.classList.remove('active');
+                }
+            });
+            
+            // Close menu when clicking menu items
+            mobileMenuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    isMenuOpen = false;
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuDropdown.classList.remove('active');
+                });
+            });
+            
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMenuOpen) {
+                    isMenuOpen = false;
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuDropdown.classList.remove('active');
+                }
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
