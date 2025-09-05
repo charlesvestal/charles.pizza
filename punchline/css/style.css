@@ -290,7 +290,8 @@ a {
 }
 
 .mobile-menu-dropdown.active {
-  max-height: 400px;
+  /* Allow for longer menus without clipping on small screens */
+  max-height: 75vh;
   padding: var(--space-md);
 }
 
