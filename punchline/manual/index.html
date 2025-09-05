@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual - Punchline iOS Drum Machine</title>
     <meta name="description" content="Complete manual for Punchline iOS drum machine - learn all features, sequencing, effects, and AudioUnit integration.">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/shared-components.js"></script>
     <style>
         .manual-container {
             max-width: 900px;
@@ -193,42 +194,11 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                </button>
-                <a class="app-icon-link header" href="/#download" aria-label="Download on the App Store">
-                    <img src="images/app-icon-large.png" alt="Punchline app icon">
-                </a>
-                <h1>Punchline Manual</h1>
-            </div>
-            <div class="nav-links">
-                <a href="/#features">Features</a>
-                <a href="/#audio-units">AUv3</a>
-                <a href="/#demo">Demos</a>
-                <a href="kits/">Kits</a>
-                <a href="privacy/">Privacy</a>
-                <a class="cta-button" href="/#download">Download</a>
-            </div>
-        </div>
-        <div class="mobile-menu-dropdown" id="mobileMenuDropdown">
-            <a href="/" class="mobile-menu-item">Home</a>
-            <a href="/#features" class="mobile-menu-item">Features</a>
-            <a href="/#audio-units" class="mobile-menu-item">AUv3</a>
-            <a href="/#demo" class="mobile-menu-item">Demos</a>
-            <a href="kits/" class="mobile-menu-item">Kits</a>
-            <a href="privacy/" class="mobile-menu-item">Privacy</a>
-            <a href="/#download" class="mobile-menu-item cta">Download</a>
-        </div>
-    </nav>
+    <!-- Header will be inserted by shared-components.js -->
 
     <div class="manual-container">
         <div class="back-to-site">
-            <a href="/">&larr; Back to Punchline</a>
+            <a href="../">&larr; Back to Punchline</a>
         </div>
         
         <header style="text-align: center; margin-bottom: var(--space-4xl);">
@@ -703,60 +673,16 @@
             </div>
         </section>
 
-        <footer style="text-align: center; padding: var(--space-4xl) 0 var(--space-2xl); border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: var(--space-4xl);">
-            <p style="color: var(--medium-grey); margin-bottom: var(--space-sm);">Questions? Support? <a href="mailto:punchline@charles.pizza" style="color: var(--primary-orange); text-decoration: underline;">Get in touch!</a></p>
-            <p style="color: var(--medium-grey); font-size: 0.875rem;">&copy; 2024 Punchline. All rights reserved.</p>
-        </footer>
     </div>
 
+    <!-- Footer will be inserted by shared-components.js -->
+
     <script>
-        // Mobile menu functionality (same as main site)
+        // Initialize shared components for subdirectory page  
+        initializeSharedComponents('subdirectory');
+        
+        // Page-specific functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
-            const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
-            let isMenuOpen = false;
-            
-            // Toggle menu
-            mobileMenuToggle.addEventListener('click', function(e) {
-                e.stopPropagation();
-                isMenuOpen = !isMenuOpen;
-                if (isMenuOpen) {
-                    mobileMenuToggle.classList.add('active');
-                    mobileMenuDropdown.classList.add('active');
-                } else {
-                    mobileMenuToggle.classList.remove('active');
-                    mobileMenuDropdown.classList.remove('active');
-                }
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', function(e) {
-                if (isMenuOpen && !mobileMenuDropdown.contains(e.target) && e.target !== mobileMenuToggle) {
-                    isMenuOpen = false;
-                    mobileMenuToggle.classList.remove('active');
-                    mobileMenuDropdown.classList.remove('active');
-                }
-            });
-            
-            // Close menu when clicking menu items
-            mobileMenuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    isMenuOpen = false;
-                    mobileMenuToggle.classList.remove('active');
-                    mobileMenuDropdown.classList.remove('active');
-                });
-            });
-            
-            // Close menu on escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && isMenuOpen) {
-                    isMenuOpen = false;
-                    mobileMenuToggle.classList.remove('active');
-                    mobileMenuDropdown.classList.remove('active');
-                }
-            });
-            
             // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
