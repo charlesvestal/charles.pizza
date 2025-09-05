@@ -100,51 +100,65 @@ function createFooter(pageType = 'default') {
 
 // Mobile menu functionality - shared across all pages
 function initializeMobileMenu() {
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
-        const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
-        let isMenuOpen = false;
-        
-        // Toggle menu
-        mobileMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                mobileMenuToggle.classList.add('active');
-                mobileMenuDropdown.classList.add('active');
-            } else {
-                mobileMenuToggle.classList.remove('active');
-                mobileMenuDropdown.classList.remove('active');
-            }
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+    const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
+    
+    console.log('Mobile menu elements:', { mobileMenuToggle, mobileMenuDropdown, itemCount: mobileMenuItems.length });
+    
+    if (!mobileMenuToggle || !mobileMenuDropdown) {
+        console.warn('Mobile menu elements not found', { 
+            toggle: !!mobileMenuToggle, 
+            dropdown: !!mobileMenuDropdown 
         });
+        return;
+    }
+    
+    let isMenuOpen = false;
+    
+    // Toggle menu
+    mobileMenuToggle.addEventListener('click', function(e) {
+        console.log('Mobile menu toggle clicked');
+        e.stopPropagation();
+        isMenuOpen = !isMenuOpen;
+        console.log('Menu open state:', isMenuOpen);
         
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (isMenuOpen && !mobileMenuDropdown.contains(e.target) && e.target !== mobileMenuToggle) {
-                isMenuOpen = false;
-                mobileMenuToggle.classList.remove('active');
-                mobileMenuDropdown.classList.remove('active');
-            }
+        if (isMenuOpen) {
+            mobileMenuToggle.classList.add('active');
+            mobileMenuDropdown.classList.add('active');
+            console.log('Added active classes');
+        } else {
+            mobileMenuToggle.classList.remove('active');
+            mobileMenuDropdown.classList.remove('active');
+            console.log('Removed active classes');
+        }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (isMenuOpen && !mobileMenuDropdown.contains(e.target) && e.target !== mobileMenuToggle) {
+            isMenuOpen = false;
+            mobileMenuToggle.classList.remove('active');
+            mobileMenuDropdown.classList.remove('active');
+        }
+    });
+    
+    // Close menu when clicking menu items
+    mobileMenuItems.forEach(item => {
+        item.addEventListener('click', function() {
+            isMenuOpen = false;
+            mobileMenuToggle.classList.remove('active');
+            mobileMenuDropdown.classList.remove('active');
         });
-        
-        // Close menu when clicking menu items
-        mobileMenuItems.forEach(item => {
-            item.addEventListener('click', function() {
-                isMenuOpen = false;
-                mobileMenuToggle.classList.remove('active');
-                mobileMenuDropdown.classList.remove('active');
-            });
-        });
-        
-        // Close menu on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && isMenuOpen) {
-                isMenuOpen = false;
-                mobileMenuToggle.classList.remove('active');
-                mobileMenuDropdown.classList.remove('active');
-            }
-        });
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isMenuOpen) {
+            isMenuOpen = false;
+            mobileMenuToggle.classList.remove('active');
+            mobileMenuDropdown.classList.remove('active');
+        }
     });
 }
 
@@ -153,13 +167,23 @@ function initializeSharedComponents(pageType = 'default') {
     // Wait for DOM to be ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, creating components...');
             createHeader(pageType);
             createFooter(pageType);
-            initializeMobileMenu();
+            // Use setTimeout to ensure DOM elements are fully inserted and rendered
+            setTimeout(() => {
+                console.log('Initializing mobile menu...');
+                initializeMobileMenu();
+            }, 0);
         });
     } else {
+        console.log('DOM already ready, creating components...');
         createHeader(pageType);
         createFooter(pageType);
-        initializeMobileMenu();
+        // Use setTimeout to ensure DOM elements are fully inserted and rendered
+        setTimeout(() => {
+            console.log('Initializing mobile menu...');
+            initializeMobileMenu();
+        }, 0);
     }
 }
