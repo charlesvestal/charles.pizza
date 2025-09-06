@@ -17,24 +17,28 @@ fi
 cd "$ORIG_DIR"
 
 shopt -s nullglob
-for MOV in *.mov; do
-  BASE="${MOV%.mov}"
-  POSTER="$MEDIA_DIR/$BASE-poster.jpg"
-  MP4="$MEDIA_DIR/$BASE.mp4"
 
-  echo "Processing: $MOV"
-  # Poster at 1s into the clip
-  ffmpeg -y -ss 00:00:01 -i "$MOV" -frames:v 1 "$POSTER"
+process_one() {
+  local SRC="$1"
+  local BASE
+  BASE="${SRC%.*}"
+  local POSTER="$MEDIA_DIR/$BASE-poster.jpg"
+  local OUTMP4="$MEDIA_DIR/$BASE.mp4"
 
-  # Transcode to smaller MP4 (600w, 30fps, H.264 + AAC)
-  ffmpeg -y -i "$MOV" \
+  echo "Processing: $SRC"
+  ffmpeg -y -ss 00:00:01 -i "$SRC" -frames:v 1 "$POSTER"
+  ffmpeg -y -i "$SRC" \
     -vf "scale=600:-2,fps=30" \
     -c:v libx264 -preset veryfast -crf 24 \
     -c:a aac -b:a 96k \
     -movflags +faststart \
-    "$MP4"
+    "$OUTMP4"
+  echo "✔ Wrote $POSTER and $OUTMP4"
+}
 
-  echo "✔ Wrote $POSTER and $MP4"
+for SRC in *.mov *.mp4; do
+  [ -e "$SRC" ] || continue
+  process_one "$SRC"
 done
 
 echo "Done."
