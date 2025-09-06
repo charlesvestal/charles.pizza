@@ -122,6 +122,54 @@
             transform: scale(1.05);
         }
 
+        /* Floating play button in top-right of kit card */
+        .kit-preview-btn {
+            position: absolute;
+            top: var(--space-sm);
+            right: var(--space-sm);
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 147, 47, 0.95);
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+            box-shadow: 0 6px 16px rgba(255, 147, 47, 0.35);
+        }
+        .kit-preview-btn:hover {
+            transform: scale(1.06);
+            background: rgba(255, 147, 47, 1);
+        }
+        .kit-preview-btn svg {
+            width: 18px;
+            height: 18px;
+            color: #FFFFFF;
+            margin-left: 2px;
+        }
+        .kit-preview-btn.playing {
+            animation: none;
+        }
+        /* Equalizer bars shown while playing */
+        .kit-preview-btn .eq { display: none; align-items: flex-end; gap: 2px; height: 14px; }
+        .kit-preview-btn .eq span { width: 3px; background: #fff; border-radius: 1px; transform-origin: bottom; animation: equalize 900ms infinite ease-in-out; }
+        .kit-preview-btn .eq span:nth-child(1) { animation-delay: 0ms; height: 6px; }
+        .kit-preview-btn .eq span:nth-child(2) { animation-delay: 150ms; height: 10px; }
+        .kit-preview-btn .eq span:nth-child(3) { animation-delay: 300ms; height: 8px; }
+        .kit-preview-btn.playing svg { display: none; }
+        .kit-preview-btn.playing .eq { display: flex; }
+
+        @keyframes equalize {
+            0% { transform: scaleY(0.4); }
+            20% { transform: scaleY(1); }
+            40% { transform: scaleY(0.3); }
+            60% { transform: scaleY(0.9); }
+            80% { transform: scaleY(0.5); }
+            100% { transform: scaleY(0.8); }
+        }
+
         .kit-creator {
             background: rgba(255, 255, 255, 0.03);
             border: 2px dashed rgba(255, 147, 47, 0.3);
@@ -402,6 +450,10 @@
                 <div class="kit-card">
                     <h3 class="kit-name">909 Altemark</h3>
                     <p class="kit-description">Classic Roland TR-909 drum machine sounds with crisp electronic precision.</p>
+                    <button class="kit-preview-btn" data-preview="previews/909 Altemark.mp3" aria-label="Play preview">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        <span class="eq" aria-hidden="true"><span></span><span></span><span></span></span>
+                    </button>
                     <div class="kit-meta">
                         <span class="kit-author">contains samples from <a href="https://freesound.org/people/altemark/packs/1643/" target="_blank" style="color: #FF932f; text-decoration: underline;">altemark</a></span>
                         <div class="kit-actions">
@@ -417,6 +469,10 @@
                 <div class="kit-card">
                     <h3 class="kit-name">Battallion Kit</h3>
                     <p class="kit-description">A collection of glitchy, gritty synth drums.</p>
+                    <button class="kit-preview-btn" data-preview="previews/Battalion.mp3" aria-label="Play preview">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        <span class="eq" aria-hidden="true"><span></span><span></span><span></span></span>
+                    </button>
                     <div class="kit-meta">
                         <span class="kit-author">by timfromtheborder</span>
                         <div class="kit-actions">
@@ -432,6 +488,10 @@
                 <div class="kit-card">
                     <h3 class="kit-name">And Heartbreaks</h3>
                     <p class="kit-description">A mix of 808s and others, for big, juicy sounds.</p>
+                    <button class="kit-preview-btn" data-preview="previews/And Heartbreaks.mp3" aria-label="Play preview">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        <span class="eq" aria-hidden="true"><span></span><span></span><span></span></span>
+                    </button>
                     <div class="kit-meta">
                         <div class="kit-actions">
                             <a href="And Heartbreaks.punchlinekit" download class="kit-download">
@@ -446,6 +506,10 @@
                 <div class="kit-card">
                     <h3 class="kit-name">LoFi Haze</h3>
                     <p class="kit-description">A dream of drums with vintage warmth and nostalgic character.</p>
+                    <button class="kit-preview-btn" data-preview="previews/Lofi Haze.mp3" aria-label="Play preview">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        <span class="eq" aria-hidden="true"><span></span><span></span><span></span></span>
+                    </button>
                     <div class="kit-meta">
                         <div class="kit-actions">
                             <a href="LoFi Haze.punchlinekit" download class="kit-download">
@@ -949,6 +1013,41 @@
                 generateButton.textContent = 'Generate Kit';
             }
         });
+    </script>
+    <script>
+        // Lightweight preview player for kit cards (floating top-right button)
+        (function(){
+            const audio = new Audio();
+            let currentBtn = null;
+
+            function stop() {
+                if (currentBtn) currentBtn.classList.remove('playing');
+                audio.pause();
+                audio.currentTime = 0;
+                currentBtn = null;
+            }
+
+            document.querySelectorAll('.kit-preview-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const src = btn.dataset.preview;
+                    if (!src) return;
+                    if (currentBtn === btn && !audio.paused) {
+                        stop();
+                        return;
+                    }
+                    if (currentBtn && currentBtn !== btn) stop();
+                    audio.src = src;
+                    audio.play().then(() => {
+                        btn.classList.add('playing');
+                        currentBtn = btn;
+                    }).catch(() => {});
+                });
+            });
+
+            audio.addEventListener('ended', stop);
+            audio.addEventListener('pause', () => { if (currentBtn) currentBtn.classList.remove('playing'); });
+        })();
     </script>
 </body>
 </html>
