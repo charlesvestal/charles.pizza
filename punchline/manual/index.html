@@ -127,6 +127,82 @@
             margin: 0;
             font-size: 0.9rem;
         }
+
+        /* Interface Overview split layout */
+        .manual-split {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: var(--space-2xl);
+            align-items: start;
+        }
+        .manual-steps {
+            display: block;
+        }
+        .manual-figure {
+            margin: 0;
+            background: var(--near-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-md);
+            box-shadow: var(--shadow-lg);
+        }
+        .manual-figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            border-radius: calc(var(--border-radius-lg) - 4px);
+            object-fit: contain;
+            background: var(--black);
+        }
+        .manual-figure figcaption {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: var(--space-sm);
+            text-align: center;
+        }
+
+        /* Inline demo video styling */
+        .manual-video {
+            margin: var(--space-md) 0 var(--space-lg);
+            background: var(--near-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-md);
+            box-shadow: var(--shadow-sm);
+        }
+        .manual-video video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: calc(var(--border-radius-lg) - 4px);
+            background: var(--black);
+        }
+        .manual-video .caption {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: var(--space-sm);
+        }
+
+        /* Split layout for a subsection (text left, media right) */
+        .manual-subsection-split {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: var(--space-2xl);
+            align-items: stretch;
+            margin-top: var(--space-lg);
+        }
+        .manual-subsection-right .manual-video {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .manual-subsection-right .manual-video video {
+            flex: 1 1 auto;
+            height: 100%;
+            object-fit: contain;
+        }
         
         .back-to-site {
             text-align: center;
@@ -190,6 +266,20 @@
                 flex-direction: column;
                 gap: var(--space-xs);
             }
+
+            .manual-split {
+                grid-template-columns: 1fr;
+            }
+            .manual-figure {
+                order: -1;
+            }
+
+            .manual-subsection-split {
+                grid-template-columns: 1fr;
+            }
+            .manual-subsection-right .manual-video {
+                height: auto;
+            }
         }
     </style>
 </head>
@@ -222,7 +312,8 @@
 
         <section id="interface" class="manual-section">
             <h2>Interface Overview</h2>
-            
+            <div class="manual-split">
+                <div class="manual-steps">
             <div class="manual-item">
                 <div class="manual-item-title">Top Row</div>
                 <div class="manual-item-desc">SND, PAT, and BPM buttons for selecting the sound, pattern and tempo. In AudioUnit Player mode, the BPM button is replaced with SNG (swing/shuffle).</div>
@@ -242,41 +333,79 @@
                 <div class="manual-item-title">Bottom Row</div>
                 <div class="manual-item-desc">? (help), FUNC (function), FX (effects), PLAY/STOP and WRIT (write) buttons. In AudioUnit Player mode, PLAY/STOP is not available.</div>
             </div>
+                </div>
+                <figure class="manual-figure">
+                    <img src="../images/manual/manual-interface-overview.png" alt="Punchline iPhone interface showing SND, PAT, BPM, knobs, pad grid, and bottom row controls">
+                    <figcaption>iPhone interface overview</figcaption>
+                </figure>
+            </div>
         </section>
 
         <section id="basic-use" class="manual-section">
             <h2>Basic Use</h2>
             
-            <h3>When Stopped</h3>
-            <div class="manual-step">
-                <div class="step-number">1.</div>
-                <div class="step-desc">Tap pads to preview/trigger and select a drum sound.</div>
-            </div>
-            <div class="manual-step">
-                <div class="step-number">2.</div>
-                <div class="step-desc">Knobs control pitch, length, filter, and level of the selected sound.</div>
-            </div>
-            <div class="manual-step">
-                <div class="step-number">3.</div>
-                <div class="step-desc">Hold WRIT and tap a pad to enter the selected sound on a step.</div>
-            </div>
-            <div class="manual-step">
-                <div class="step-number">4.</div>
-                <div class="step-desc">Press PLAY to start the sequencer.</div>
+            <div class="manual-subsection-split">
+                <div class="manual-subsection-left">
+                    <h3>When Stopped</h3>
+                    <div class="manual-step">
+                        <div class="step-number">1.</div>
+                        <div class="step-desc">Tap pads to preview/trigger and select a drum sound.</div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-number">2.</div>
+                        <div class="step-desc">Hold SND and tap a pad to select it without triggering.</div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-number">3.</div>
+                        <div class="step-desc">Knobs control pitch, length, filter, and level of the selected sound.</div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-number">4.</div>
+                        <div class="step-desc">Hold WRIT and tap a pad to enter the selected sound on a step.</div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-number">5.</div>
+                        <div class="step-desc">Press PLAY to start the sequencer.</div>
+                    </div>
+                </div>
+                <div class="manual-subsection-right">
+                    <div class="manual-video">
+                        <video class="manual-clip" controls preload="none" playsinline poster="../images/manual/manual-when-stopped-poster.jpg">
+                            <source src="../images/manual/manual-when-stopped.mp4" type="video/mp4">
+                            <source src="../images/manual/manual-when-stopped.mov" type="video/quicktime">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="caption">Basic actions when stopped: select sounds, tweak knobs, enter steps.</div>
+                    </div>
+                </div>
             </div>
 
-            <h3>Write Mode (WRIT button on)</h3>
-            <div class="manual-step">
-                <div class="step-number">1.</div>
-                <div class="step-desc">Tap WRIT to toggle write mode on/off.</div>
-            </div>
-            <div class="manual-step">
-                <div class="step-number">2.</div>
-                <div class="step-desc">Tap pads to toggle steps in the pattern for the selected sound.</div>
-            </div>
-            <div class="manual-step">
-                <div class="step-number">3.</div>
-                <div class="step-desc">Hold a step to edit its parameters, including RETRIG.</div>
+            <div class="manual-subsection-split">
+                <div class="manual-subsection-left">
+                    <h3>Write Mode (WRIT button on)</h3>
+                    <div class="manual-step">
+                        <div class="step-number">1.</div>
+                        <div class="step-desc">Tap WRIT to toggle write mode on/off.</div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-number">2.</div>
+                        <div class="step-desc">Tap pads to toggle steps in the pattern for the selected sound.</div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-number">3.</div>
+                        <div class="step-desc">Hold a step to edit its parameters, including RETRIG.</div>
+                    </div>
+                </div>
+                <div class="manual-subsection-right">
+                    <div class="manual-video">
+                        <video class="manual-clip" controls preload="none" playsinline poster="../images/manual/manual-write-mode-poster.jpg">
+                            <source src="../images/manual/manual-write-mode.mp4" type="video/mp4">
+                            <source src="../images/manual/manual-write-mode.mov" type="video/quicktime">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="caption">Toggling WRIT, placing steps, and editing step parameters.</div>
+                    </div>
+                </div>
             </div>
 
             <h3>Play and FX</h3>
