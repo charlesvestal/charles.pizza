@@ -59,6 +59,8 @@ function createFooter(pageType = 'default') {
         pathPrefix = '../';
     }
     
+    const currentYear = new Date().getFullYear();
+    
     const footerHTML = `
         <footer class="footer">
             <div class="footer-content">
@@ -82,13 +84,18 @@ function createFooter(pageType = 'default') {
                         <h4>Links</h4>
                         <a href="${pathPrefix}testflight/">TestFlight</a>
                         <a href="${pathPrefix}privacy/">Privacy</a>
+                        <a href="https://discord.gg/yP7SjqDrZG" target="_blank" rel="noopener">Discord (#punchline)</a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Punchline. All rights reserved.</p>
+                <p>&copy; ${currentYear} Punchline. All rights reserved.</p>
                 <p style="margin-top: var(--space-sm); color: var(--text-secondary);">
                     Questions? Support? <a href="mailto:punchline@charles.pizza" style="color: #FF932f; text-decoration: underline;">Get in touch!</a>
+                </p>
+                <p style="margin-top: var(--space-sm); color: var(--text-secondary);">
+                    Join the #punchline channel on the 
+                    <a href="https://discord.gg/yP7SjqDrZG" target="_blank" rel="noopener" style="color: #FF932f; text-decoration: underline;">Move Hackers Discord</a>.
                 </p>
             </div>
         </footer>
