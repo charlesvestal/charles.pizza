@@ -294,6 +294,7 @@
         <header style="text-align: center; margin-bottom: var(--space-4xl);">
             <h1 style="color: var(--white); margin-bottom: var(--space-md);">Punchline Manual</h1>
             <p style="color: var(--light-grey); font-size: 1.125rem;">Complete guide to the iOS drum machine and AudioUnit plugins</p>
+            <p style="color: grey; font-size: .6rem;">Version 1.1</p>
         </header>
 
         <div class="manual-nav">
@@ -302,6 +303,7 @@
                 <a href="#interface">Interface Overview</a>
                 <a href="#basic-use">Basic Use</a>
                 <a href="#advanced">Advanced Operations</a>
+                <a href="#import-export">Import/Export</a>
                 <a href="#samples">Custom Samples</a>
                 <a href="#audiounit-player">AudioUnit Player</a>
                 <a href="#audiounit-effects">AudioUnit Effects</a>
@@ -417,15 +419,19 @@
                     </div>
                     <div class="manual-step">
                         <div class="step-number">2.</div>
-                        <div class="step-desc">With WRIT on, hold FX and tap pads to record effects automation (overwrites existing).</div>
+                        <div class="step-desc">Hold FX and drag vertically on effect pads to adjust parameters.</div>
                     </div>
                     <div class="manual-step">
                         <div class="step-number">3.</div>
-                        <div class="step-desc">Double-tap FX button to latch FX mode.</div>
+                        <div class="step-desc">With WRIT on, hold FX and tap pads to record effects automation (overwrites existing).</div>
                     </div>
                     <div class="manual-step">
                         <div class="step-number">4.</div>
-                        <div class="step-desc">Hold BPM and use the knobs to adjust TEMPO and SWING.</div>
+                        <div class="step-desc">Double-tap FX button to latch FX mode.</div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-number">5.</div>
+                        <div class="step-desc">Hold BPM and use the knobs to adjust TEMPO and SWING or TAP TEMPO.</div>
                     </div>
                 </div>
                 <div class="manual-subsection-right">
@@ -532,8 +538,38 @@
             </div>
             <div class="manual-step">
                 <div class="step-number">3.</div>
-                <div class="step-desc">This mimics how real hi-hats work - you can't have both open and closed simultaneously.</div>
+                <div class="step-desc">When both are on the same step, OH takes priority.</div>
             </div>
+            <div class="manual-step">
+                <div class="step-number">4.</div>
+                <div class="step-desc">Choke group can be disabled in Settings if desired.</div>
+            </div>
+        </section>
+
+        <section id="import-export" class="manual-section">
+            <h2>Import/Export & Sharing</h2>
+
+            <h3>Pattern Import/Export</h3>
+            <div class="feature-list">
+                <ul>
+                    <li>Export patterns as .punchline files</li>
+                    <li>Share patterns via email, messages, AirDrop</li>
+                    <li>Import patterns from other users</li>
+                    <li>Includes all automation and effects</li>
+                </ul>
+            </div>
+
+            <h3>WAV Export</h3>
+            <div class="feature-list">
+                <ul>
+                    <li>Export patterns as WAV audio files</li>
+                    <li>Render with all effects and automation</li>
+                    <li>Choose loop count for export length</li>
+                    <li>Share or save to Files app</li>
+                </ul>
+            </div>
+
+            <p style="color: var(--light-grey); font-style: italic; margin-top: var(--space-lg);">Access import/export features by tapping on the Pattern Chain display.</p>
         </section>
 
         <section id="samples" class="manual-section">
